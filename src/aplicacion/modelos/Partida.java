@@ -58,9 +58,12 @@ public class Partida {
     
         // --- CONSTRUCTOR CON PARÁMETROS ---
         
-        public Partida(byte rondas, byte numJugadores, int puntos, ArrayList<Jugador> listaJugadores) {
+        public Partida(byte rondas, byte numJugadores, int puntos, Jugador[] listaJugadores) throws ExcepcionPartida{
             
-            
+            this.setRondas(rondas) ;
+            this.setNumJugadores(numJugadores) ;
+            this.setPuntos(puntos) ;
+            this.setListaJugadores(listaJugadores) ;
         }
         
         
@@ -191,5 +194,27 @@ public class Partida {
                     throw new ExcepcionPartida("El número de jugadores tiene que ser de entre 2 y 6.") ;
                 }
             }
+
+            
+            // --- TO STRING ---
+            
+            /**
+             * Método toString() de la clase Partida.
+             * 
+             * @return Devuelve los datos de la partida.
+             */
+            @Override
+            public String toString() {
+                
+                StringBuilder sb = new StringBuilder();
+                sb.append("Número de rondas = \n").append(rondas);
+                sb.append("Número de jugadores = \n").append(numJugadores);
+                sb.append("Puntos = \n").append(puntos); // ESTO SEGURAMENTE DESAPAREZCA
+                sb.append(", listaJugadores=").append(listaJugadores); // AQUI´TIENME QUE IR EL TOSTRING DE LA CLASE JUGADOR
+                
+                return sb.toString();
+            }
     
+            
+            
 }
