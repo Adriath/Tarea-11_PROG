@@ -2,7 +2,6 @@
 package aplicacion.modelos;
 
 import aplicacion.modelos.excepciones.ExcepcionPartida;
-import java.util.ArrayList;
 
 /**
  * Plantilla de una partida de Tuki Tuki.
@@ -196,24 +195,30 @@ public class Partida {
             }
 
             
-            // --- TO STRING ---
+        // --- TO STRING ---
+
+        /**
+         * Método toString() de la clase Partida.
+         * 
+         * @return Devuelve los datos de la partida.
+         */
+        @Override
+        public String toString() {
+
+            StringBuilder sb = new StringBuilder() ;
             
-            /**
-             * Método toString() de la clase Partida.
-             * 
-             * @return Devuelve los datos de la partida.
-             */
-            @Override
-            public String toString() {
+            sb.append("Número de rondas = ").append(rondas) ;
+            sb.append("\nNúmero de jugadores = ").append(numJugadores) ;
+            sb.append("\nPUNTUACIONES: ") ;
+            sb.append("\n---------------- = ") ;
+            
+            for (int i = 0; i < 10; i++) {
                 
-                StringBuilder sb = new StringBuilder();
-                sb.append("Número de rondas = \n").append(rondas);
-                sb.append("Número de jugadores = \n").append(numJugadores);
-                sb.append("Puntos = \n").append(puntos); // ESTO SEGURAMENTE DESAPAREZCA
-                sb.append(", listaJugadores=").append(listaJugadores); // AQUI´TIENME QUE IR EL TOSTRING DE LA CLASE JUGADOR
-                
-                return sb.toString();
             }
+
+
+            return sb.toString();
+        }
     
             
             
