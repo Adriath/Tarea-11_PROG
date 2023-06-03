@@ -35,6 +35,16 @@ public class Jugador {
      */
     private int puntosTotales ;
     
+    /**
+     * Total de partidas jugadas.
+     */
+    private int partidasJugadas ;
+    
+    /**
+     * Total de partidas ganadas.
+     */
+    private int partidasGanadas ;
+    
     
     // ------------------- DECLARAICÓN DE MÉTODOS -------------------
 
@@ -141,6 +151,57 @@ public class Jugador {
                 
                 this.puntosTotales = puntosTotales;
             }
+            
+            
+            // PARTIDAS JUGADAS
+
+            
+            /**
+             * Método que devuelve el total de las partidas jugadas.
+             * 
+             * @return Total de partidas jugadas.
+             */
+            public int getPartidasJugadas() {
+                return partidasJugadas;
+            }
+
+            
+            /**
+             * Método que modifica el total de partidas jugadas.
+             * Suma una partida al total.
+             * 
+             * @param partidasJugadas Total de partidas jugadas.
+             */
+            public void setPartidasJugadas(int partidasJugadas) {
+                
+                this.partidasJugadas++ ;
+            }
+
+            
+            // PARTIDAS GANADAS
+
+            
+            /**
+             * Método que devuelve el total de las partidas ganadas.
+             * 
+             * @return Total de partidas ganadas.
+             */
+            public int getPartidasGanadas() {
+                
+                return partidasGanadas ;
+            }
+
+            
+            /**
+             * Método que modifica el total de partidas ganadas.
+             * Suma una partida al total.
+             * 
+             * @param partidasGanadas Total de partidas ganadas.
+             */
+            public void setPartidasGanadas(int partidasGanadas) {
+                
+                this.partidasGanadas++ ;
+            }
         
         
         // -------- TO STRING ---------            
@@ -154,57 +215,4 @@ public class Jugador {
             return sb.toString();
         }
         
-        
-        
-        // --------------------------------------------------
-        // -------------- MAIN DE PRUEBAS -------------------
-        // --------------------------------------------------
-        
-            
-        public static void main(String[] args) {
-        
-         Partida partida1 = null;
-         
-         Jugador listaJugadores[] = new Jugador[3]; 
-         
-         Jugador jugador1 = null ;
-         Jugador jugador2 = null ;
-         Jugador jugador3 = null ;
-         
-         try
-         {
-            jugador1 = new Jugador("Adrián", 0, 0) ;
-            jugador2 = new Jugador("Sara", 0, 0) ;
-            jugador3 = new Jugador("Margari", 0, 0) ;
-         }
-         catch(ExcepcionJugador e){
-             
-             System.out.println("Error jugador") ;
-         }
-         
-         
-         try
-         {
-             partida1 = new Partida((byte)2, (byte)3, 0, listaJugadores) ;
-         }
-         catch(ExcepcionPartida e){
-             System.out.println(e.getMessage()) ;
-         }
-         
-        
-         
-         listaJugadores[0] = jugador1 ;
-         listaJugadores[1] = jugador2 ;
-         listaJugadores[2] = jugador3 ;
-         
-         jugador1.setPuntosActuales(50);
-         jugador2.setPuntosActuales(30);
-         jugador3.setPuntosActuales(-4);
-         
-            System.out.println(partida1.toString());
-            for (int i = 0; i < listaJugadores.length; i++) 
-            {
-                System.out.println(listaJugadores[i].toString() );
-            }
-    }
 }
