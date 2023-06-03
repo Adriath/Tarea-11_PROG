@@ -61,11 +61,11 @@ public class Jugador {
     
         // ---- CONSTRUCTOR CON PARÁMETROS -----
     
-        public Jugador(String nombre, int puntosActuales, int puntosTotales) throws ExcepcionJugador{
+        public Jugador(String nombre) throws ExcepcionJugador{
             
             this.setNombre(nombre) ;
-            this.puntosActuales = puntosActuales ;
-            this.puntosTotales = puntosTotales ;
+            this.puntosActuales = 0 ;
+            this.puntosTotales = 0 ;
             this.partidasJugadas = 0 ;
             this.partidasGanadas = 0 ;
             

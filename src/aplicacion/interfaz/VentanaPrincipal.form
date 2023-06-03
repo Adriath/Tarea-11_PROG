@@ -164,7 +164,6 @@
                     <Property name="maximum" type="int" value="5"/>
                     <Property name="minimum" type="int" value="1"/>
                     <Property name="paintLabels" type="boolean" value="true"/>
-                    <Property name="value" type="int" value="5"/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -180,7 +179,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="0" red="0" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="&#xa1;JUGAR!"/>
+                    <Property name="text" type="java.lang.String" value="&#xa1;A JUGAR!"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                         <LineBorder/>

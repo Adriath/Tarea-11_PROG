@@ -1,6 +1,12 @@
 
 package aplicacion.interfaz;
 
+import aplicacion.modelos.Jugador;
+import aplicacion.modelos.Partida;
+import aplicacion.modelos.excepciones.ExcepcionJugador;
+import aplicacion.modelos.excepciones.ExcepcionPartida;
+import utilidades.Utilidades;
+
 /**
  * Ventana principal de la aplicación para contabilizar partidas de Tuki Tuki.
  * 
@@ -9,6 +15,19 @@ package aplicacion.interfaz;
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
     
+    
+    // ----------- DECLARACIÓN DE VARIABLES --------------
+    
+    private byte numeroRondas ;
+    private byte numeroJugadores ;
+    
+    private static Jugador[] listaJugadores ;
+    
+    Partida partida ;
+    
+    
+    // -------------- OONSTRUCTOR -------------------
+    
     /**
      * Creates new form VentanaPrincipal
      */
@@ -16,6 +35,47 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
     }
 
+    
+    
+    // -------------- MÉTODOS PERSONALIZADOS -----------------
+    
+    
+    private static void aniadirJugadores(byte numeroJugadores){
+        
+        boolean validador = false ;
+        
+        
+        listaJugadores = new Jugador[numeroJugadores] ;
+        
+        for (int i = 0; i < listaJugadores.length; i++) {
+            
+            do 
+            {
+                String nombre = Utilidades.leerCadenaGUI("Introduce el nombre del jugador/a " + (i + 1)) ;
+                
+                try
+                {
+                    listaJugadores[i] = new Jugador(nombre) ;
+                    validador = true ;
+                }
+                catch(ExcepcionJugador e){
+
+                    Utilidades.mostrarMensajeGUI(e.getMessage()) ;
+                }
+                catch(Exception e){
+                    
+                    Utilidades.mostrarMensajeGUI("Error.") ;
+                    System.out.println(e.getMessage()) ;
+                }
+                
+            } while (!validador);
+        }
+        
+    }    
+    
+    
+    // ----------- CONTROL DE EVENTOS ----------------
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -88,12 +148,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         sliderNumeroRondas.setMaximum(5);
         sliderNumeroRondas.setMinimum(1);
         sliderNumeroRondas.setPaintLabels(true);
-        sliderNumeroRondas.setValue(5);
         marcoNuevaPartida.add(sliderNumeroRondas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 310, 60));
 
         botonJugar.setFont(new java.awt.Font("MV Boli", 1, 36)); // NOI18N
         botonJugar.setForeground(new java.awt.Color(0, 0, 255));
-        botonJugar.setText("¡JUGAR!");
+        botonJugar.setText("¡A JUGAR!");
         botonJugar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         botonJugar.setContentAreaFilled(false);
         botonJugar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -273,7 +332,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botonNuevaPartida1ActionPerformed
 
     private void botonRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRankingActionPerformed
-        // TODO add your handling code here:
+        
+        Utilidades.mostrarMensajeGUI("¡En construcción!") ;
     }//GEN-LAST:event_botonRankingActionPerformed
 
     private void cajaTextoNumeroJugadores1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cajaTextoNumeroJugadores1MouseClicked
@@ -285,7 +345,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_cajaTextoNumeroJugadores1ActionPerformed
 
     private void botonJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonJugarActionPerformed
-        // TODO add your handling code here:
+        
+        numeroJugadores = (byte)sliderNumeroJugadores.getValue() ;
+        
+        numeroRondas = (byte)sliderNumeroRondas.getValue() ;
+        
+        aniadirJugadores(numeroJugadores) ;
+        
+        try
+        {
+            partida = new Partida(numeroRondas, numeroJugadores, listaJugadores) ;
+        }
+        catch(ExcepcionPartida e){
+            
+            Utilidades.mostrarMensajeGUI(e.getMessage()) ;
+        }
+        catch(Exception e){
+            
+            Utilidades.mostrarMensajeGUI("Error") ;
+            System.out.println(e.getMessage()) ;
+        }
     }//GEN-LAST:event_botonJugarActionPerformed
 
     /**

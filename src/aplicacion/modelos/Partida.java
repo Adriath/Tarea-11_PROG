@@ -31,11 +31,6 @@ public class Partida {
     private byte numJugadores ;
     
     /**
-     * Número de puntos del jugador.
-     */
-    private int puntos ;
-    
-    /**
      * Lista de jugadores de la partida.
      */
     private Jugador[] listaJugadores ;
@@ -51,18 +46,16 @@ public class Partida {
             
         this.rondas = 0 ;
         this.numJugadores = 0 ;
-        this.puntos = 0 ;
         this.listaJugadores = new Jugador[6] ;
         }
 
     
         // --- CONSTRUCTOR CON PARÁMETROS ---
         
-        public Partida(byte rondas, byte numJugadores, int puntos, Jugador[] listaJugadores) throws ExcepcionPartida{
+        public Partida(byte rondas, byte numJugadores, Jugador[] listaJugadores) throws ExcepcionPartida{
             
             this.setRondas(rondas) ;
             this.setNumJugadores(numJugadores) ;
-            this.setPuntos(puntos) ;
             this.setListaJugadores(listaJugadores) ;
         }
         
@@ -138,31 +131,6 @@ public class Partida {
 
             
             
-            // PUNTOS
-            
-            /**
-             * Método que devuelve el número de puntos en la partida.
-             * 
-             * @return Devuelve el número de puntos.
-             */
-            public int getPuntos() {
-                
-                return puntos;
-            }
-
-            
-            /**
-             * Método que modifica el número de puntos.
-             * 
-             * @param puntos Número de puntos.
-             */
-            public void setPuntos(int puntos) {
-                
-                this.puntos = puntos;
-            }
-
-            
-            
             // LISTA DE JUGADORES
             
 
@@ -217,6 +185,18 @@ public class Partida {
         }
     
             
+        // ------------------ MÉTODOS PERSONALIZADOS ---------------------
+        
+        public static void jugar(Jugador[] listaJugadores, int[] listaPuntos){
+            
+            for (int i = 0; i < listaJugadores.length; i++) {
+                // Añade los puntos de la partida al jugador.
+                
+                listaJugadores[i].setPuntosActuales(listaPuntos[i]) ;
+            }
+        }
+        
+        
         
         // --------------------------------------------------
         // -------------- MAIN DE PRUEBAS -------------------
@@ -235,9 +215,9 @@ public class Partida {
          
          try
          {
-            jugador1 = new Jugador("Adrián", 0, 0) ;
-            jugador2 = new Jugador("Sara", 0, 0) ;
-            jugador3 = new Jugador("Margari", 0, 0) ;
+            jugador1 = new Jugador("Adrián") ;
+            jugador2 = new Jugador("Sara") ;
+            jugador3 = new Jugador("Margari") ;
          }
          catch(ExcepcionJugador e){
              
@@ -247,7 +227,7 @@ public class Partida {
          
          try
          {
-             partida1 = new Partida((byte)2, (byte)3, 0, listaJugadores) ;
+             partida1 = new Partida((byte)2, (byte)3, listaJugadores) ;
          }
          catch(ExcepcionPartida e){
              System.out.println(e.getMessage()) ;
