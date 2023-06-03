@@ -26,17 +26,115 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         marcoPrincipal = new javax.swing.JPanel();
+        menuPrincipal = new javax.swing.JPanel();
+        botonNuevaPartida1 = new javax.swing.JButton();
+        botonRanking = new javax.swing.JButton();
+        labelMenuPrincipal = new javax.swing.JLabel();
+        separadorMenuPrincipal = new javax.swing.JSeparator();
+        fondoPantalla = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        marcoPrincipal.setBackground(new java.awt.Color(0, 0, 0));
         marcoPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        menuPrincipal.setOpaque(false);
+
+        botonNuevaPartida1.setFont(new java.awt.Font("MV Boli", 0, 24)); // NOI18N
+        botonNuevaPartida1.setForeground(new java.awt.Color(0, 0, 0));
+        botonNuevaPartida1.setText("NUEVA PARTIDA");
+        botonNuevaPartida1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        botonNuevaPartida1.setContentAreaFilled(false);
+        botonNuevaPartida1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonNuevaPartida1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonNuevaPartida1ActionPerformed(evt);
+            }
+        });
+
+        botonRanking.setFont(new java.awt.Font("MV Boli", 0, 24)); // NOI18N
+        botonRanking.setForeground(new java.awt.Color(0, 0, 0));
+        botonRanking.setText("RANKING");
+        botonRanking.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        botonRanking.setContentAreaFilled(false);
+        botonRanking.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonRanking.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRankingActionPerformed(evt);
+            }
+        });
+
+        labelMenuPrincipal.setFont(new java.awt.Font("MV Boli", 1, 24)); // NOI18N
+        labelMenuPrincipal.setForeground(new java.awt.Color(0, 0, 0));
+        labelMenuPrincipal.setText("Menú principal");
+
+        separadorMenuPrincipal.setForeground(new java.awt.Color(0, 0, 0));
+        separadorMenuPrincipal.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        javax.swing.GroupLayout menuPrincipalLayout = new javax.swing.GroupLayout(menuPrincipal);
+        menuPrincipal.setLayout(menuPrincipalLayout);
+        menuPrincipalLayout.setHorizontalGroup(
+            menuPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuPrincipalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(menuPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuPrincipalLayout.createSequentialGroup()
+                        .addGroup(menuPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelMenuPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(menuPrincipalLayout.createSequentialGroup()
+                                .addGap(0, 47, Short.MAX_VALUE)
+                                .addGroup(menuPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(botonRanking, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(botonNuevaPartida1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(40, 40, 40))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuPrincipalLayout.createSequentialGroup()
+                        .addComponent(separadorMenuPrincipal)
+                        .addContainerGap())))
+        );
+        menuPrincipalLayout.setVerticalGroup(
+            menuPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuPrincipalLayout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(labelMenuPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(separadorMenuPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(botonNuevaPartida1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(botonRanking, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
+        );
+
+        marcoPrincipal.add(menuPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 50, 400, 520));
+
+        fondoPantalla.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        fondoPantalla.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplicacion/interfaz/imagenes/Fonde de pantalla Tuki_editado.png"))); // NOI18N
+        fondoPantalla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                fondoPantallaMouseClicked(evt);
+            }
+        });
+        marcoPrincipal.add(fondoPantalla, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 1180, 810));
+
         getContentPane().add(marcoPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1059, 777));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void fondoPantallaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fondoPantallaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fondoPantallaMouseClicked
+
+    private void botonNuevaPartida1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevaPartida1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonNuevaPartida1ActionPerformed
+
+    private void botonRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRankingActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonRankingActionPerformed
 
     /**
      * @param args the command line arguments
@@ -74,6 +172,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonNuevaPartida1;
+    private javax.swing.JButton botonRanking;
+    private javax.swing.JLabel fondoPantalla;
+    private javax.swing.JLabel labelMenuPrincipal;
     private javax.swing.JPanel marcoPrincipal;
+    private javax.swing.JPanel menuPrincipal;
+    private javax.swing.JSeparator separadorMenuPrincipal;
     // End of variables declaration//GEN-END:variables
 }
