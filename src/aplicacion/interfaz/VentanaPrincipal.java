@@ -33,6 +33,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         sliderNumeroJugadores = new javax.swing.JSlider();
         labelNumeroRondas = new javax.swing.JLabel();
         sliderNumeroRondas = new javax.swing.JSlider();
+        botonJugar = new javax.swing.JButton();
         ventanaProvisional = new javax.swing.JInternalFrame();
         marcoNuevaPartida1 = new javax.swing.JPanel();
         labelImagenNuevaPartida1 = new javax.swing.JLabel();
@@ -89,6 +90,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         sliderNumeroRondas.setPaintLabels(true);
         sliderNumeroRondas.setValue(5);
         marcoNuevaPartida.add(sliderNumeroRondas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 310, 60));
+
+        botonJugar.setFont(new java.awt.Font("MV Boli", 1, 36)); // NOI18N
+        botonJugar.setForeground(new java.awt.Color(0, 0, 255));
+        botonJugar.setText("¡JUGAR!");
+        botonJugar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        botonJugar.setContentAreaFilled(false);
+        botonJugar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonJugar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonJugarActionPerformed(evt);
+            }
+        });
+        marcoNuevaPartida.add(botonJugar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 230, 100));
 
         ventanaProvisional.setBackground(new java.awt.Color(51, 51, 51));
         ventanaProvisional.setClosable(true);
@@ -270,6 +284,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cajaTextoNumeroJugadores1ActionPerformed
 
+    private void botonJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonJugarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonJugarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -306,6 +324,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonJugar;
     private javax.swing.JButton botonNuevaPartida1;
     private javax.swing.JButton botonRanking;
     private javax.swing.JTextField cajaTextoNumeroJugadores1;
