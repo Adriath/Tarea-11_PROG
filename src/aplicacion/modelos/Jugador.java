@@ -2,7 +2,6 @@
 package aplicacion.modelos;
 
 import aplicacion.modelos.excepciones.ExcepcionJugador;
-import aplicacion.modelos.excepciones.ExcepcionPartida;
 
 /**
  * Clase que define un/a jugador/a de Tuki Tuki.
@@ -56,6 +55,8 @@ public class Jugador {
             this.nombre = "" ;
             this.puntosActuales = 0 ;
             this.puntosTotales = 0 ;
+            this.partidasJugadas = 0 ;
+            this.partidasGanadas = 0 ;
         }
     
         // ---- CONSTRUCTOR CON PARÁMETROS -----
@@ -65,6 +66,8 @@ public class Jugador {
             this.setNombre(nombre) ;
             this.puntosActuales = puntosActuales ;
             this.puntosTotales = puntosTotales ;
+            this.partidasJugadas = 0 ;
+            this.partidasGanadas = 0 ;
             
         }
     
