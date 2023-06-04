@@ -187,14 +187,16 @@ public class Partida {
             
         // ------------------ MÉTODOS PERSONALIZADOS ---------------------
         
-        public static void jugar(Jugador[] listaJugadores, int[] listaPuntos){
-            
-            for (int i = 0; i < listaJugadores.length; i++) {
-                // Añade los puntos de la partida al jugador.
-                
-                listaJugadores[i].setPuntosActuales(listaPuntos[i]) ;
-            }
-        }
+//        public static void jugar(Jugador[] listaJugadores, int[] listaPuntos){
+//            
+//            for (int i = 0; i < listaJugadores.length; i++) {
+//                // Añade los puntos de la partida al jugador.
+//                
+//                listaJugadores[i].setPuntosActuales(listaPuntos[i]) ;
+//                
+//                // AQUÍ AHORA HABRÁ QUE CMPARAR LOS PUNTOS PARA VER QUIÉN GANA
+//            }
+//        }
         
         
         

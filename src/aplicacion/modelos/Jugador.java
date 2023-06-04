@@ -44,6 +44,11 @@ public class Jugador {
      */
     private int partidasGanadas ;
     
+    /**
+     * Indica si ha ganado la partida.
+     */
+    private boolean esGanador ;
+    
     
     // ------------------- DECLARAICÓN DE MÉTODOS -------------------
 
@@ -57,6 +62,7 @@ public class Jugador {
             this.puntosTotales = 0 ;
             this.partidasJugadas = 0 ;
             this.partidasGanadas = 0 ;
+            this.esGanador = false ;
         }
     
         // ---- CONSTRUCTOR CON PARÁMETROS -----
@@ -68,6 +74,7 @@ public class Jugador {
             this.puntosTotales = 0 ;
             this.partidasJugadas = 0 ;
             this.partidasGanadas = 0 ;
+            this.esGanador = false ;
             
         }
     
@@ -205,6 +212,34 @@ public class Jugador {
                 
                 this.partidasGanadas++ ;
             }
+            
+            
+            
+            // ES GANADOR
+
+            
+            /**
+             * Método que devuelve si el/la jugador/a es ganador/a.
+             * 
+             * @return Si se ha ganado la partida. True gana, false pierde.
+             */
+            public boolean isEsGanador() {
+                
+                return esGanador;
+            }
+
+            
+            /**
+             * Método que modifica el estado del jugador/a entre perder y ganar.
+             * 
+             * @param esGanador Estado del jugador/a (ganar o perder).
+             */
+            public void setEsGanador(boolean esGanador) {
+                
+                this.esGanador = esGanador;
+            }
+
+            
         
         
         // -------- TO STRING ---------            

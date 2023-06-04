@@ -22,6 +22,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private byte numeroJugadores ;
     
     private static Jugador[] listaJugadores ;
+//    private static int[] listaPuntos ;
     
     Partida partida ;
     
@@ -71,7 +72,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             } while (!validador);
         }
         
-    }    
+    }
     
     
     // ----------- CONTROL DE EVENTOS ----------------
@@ -100,6 +101,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         labelNumeroJugadores1 = new javax.swing.JLabel();
         cajaTextoNumeroJugadores1 = new javax.swing.JTextField();
         separadorNumeroJugadores1 = new javax.swing.JSeparator();
+        ventanaListaJugadoresInicial = new javax.swing.JInternalFrame();
+        marcoListaJugadores = new javax.swing.JPanel();
+        labelImagenListaJugadores = new javax.swing.JLabel();
+        botonJugar1 = new javax.swing.JButton();
         menuPrincipal = new javax.swing.JPanel();
         botonNuevaPartida1 = new javax.swing.JButton();
         botonRanking = new javax.swing.JButton();
@@ -240,6 +245,46 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         marcoPrincipal.add(ventanaNuevaPartida, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 840, 580));
 
+        ventanaListaJugadoresInicial.setBackground(new java.awt.Color(51, 51, 51));
+        ventanaListaJugadoresInicial.setClosable(true);
+        ventanaListaJugadoresInicial.setResizable(true);
+        ventanaListaJugadoresInicial.setTitle("Lista de jugadores");
+        ventanaListaJugadoresInicial.setVisible(false);
+
+        marcoListaJugadores.setBackground(new java.awt.Color(0, 0, 0));
+        marcoListaJugadores.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        labelImagenListaJugadores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplicacion/interfaz/imagenes/Tuki sobre fondo negro_editado.png"))); // NOI18N
+        marcoListaJugadores.add(labelImagenListaJugadores, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, -30, -1, 580));
+
+        botonJugar1.setFont(new java.awt.Font("MV Boli", 1, 36)); // NOI18N
+        botonJugar1.setForeground(new java.awt.Color(0, 0, 255));
+        botonJugar1.setText("¡A JUGAR!");
+        botonJugar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        botonJugar1.setContentAreaFilled(false);
+        botonJugar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonJugar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonJugar1ActionPerformed(evt);
+            }
+        });
+        marcoListaJugadores.add(botonJugar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 230, 100));
+
+        javax.swing.GroupLayout ventanaListaJugadoresInicialLayout = new javax.swing.GroupLayout(ventanaListaJugadoresInicial.getContentPane());
+        ventanaListaJugadoresInicial.getContentPane().setLayout(ventanaListaJugadoresInicialLayout);
+        ventanaListaJugadoresInicialLayout.setHorizontalGroup(
+            ventanaListaJugadoresInicialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(marcoListaJugadores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        ventanaListaJugadoresInicialLayout.setVerticalGroup(
+            ventanaListaJugadoresInicialLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ventanaListaJugadoresInicialLayout.createSequentialGroup()
+                .addComponent(marcoListaJugadores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        marcoPrincipal.add(ventanaListaJugadoresInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 840, 580));
+
         menuPrincipal.setOpaque(false);
 
         botonNuevaPartida1.setFont(new java.awt.Font("MV Boli", 0, 24)); // NOI18N
@@ -346,11 +391,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void botonJugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonJugarActionPerformed
         
+        // Recuperamos los valores de los slider
+        
         numeroJugadores = (byte)sliderNumeroJugadores.getValue() ;
         
         numeroRondas = (byte)sliderNumeroRondas.getValue() ;
         
+        // Pedimos el nombre de los jugadores y obtenemos la lista de jugadores
+        
         aniadirJugadores(numeroJugadores) ;
+        
+        //Ahora que tenemos el número de rondas y los datos de los jugadores creamos la partida
         
         try
         {
@@ -365,7 +416,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             Utilidades.mostrarMensajeGUI("Error") ;
             System.out.println(e.getMessage()) ;
         }
+        
+        
+        // Cerramos la ventana
+        
+        ventanaNuevaPartida.dispose() ;
+        
+        // Abre la ventana que muestra la lista de jugadores inicial
+        
+        ventanaListaJugadoresInicial.pack() ;
+        ventanaListaJugadoresInicial.setVisible(true) ;
+        
     }//GEN-LAST:event_botonJugarActionPerformed
+
+    private void botonJugar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonJugar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonJugar1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -404,16 +470,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonJugar;
+    private javax.swing.JButton botonJugar1;
     private javax.swing.JButton botonNuevaPartida1;
     private javax.swing.JButton botonRanking;
     private javax.swing.JTextField cajaTextoNumeroJugadores1;
     private javax.swing.JLabel fondoPantalla;
+    private javax.swing.JLabel labelImagenListaJugadores;
     private javax.swing.JLabel labelImagenNuevaPartida;
     private javax.swing.JLabel labelImagenNuevaPartida1;
     private javax.swing.JLabel labelMenuPrincipal;
     private javax.swing.JLabel labelNumeroJugadores;
     private javax.swing.JLabel labelNumeroJugadores1;
     private javax.swing.JLabel labelNumeroRondas;
+    private javax.swing.JPanel marcoListaJugadores;
     private javax.swing.JPanel marcoNuevaPartida;
     private javax.swing.JPanel marcoNuevaPartida1;
     private javax.swing.JPanel marcoPrincipal;
@@ -422,6 +491,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JSeparator separadorNumeroJugadores1;
     private javax.swing.JSlider sliderNumeroJugadores;
     private javax.swing.JSlider sliderNumeroRondas;
+    private javax.swing.JInternalFrame ventanaListaJugadoresInicial;
     private javax.swing.JInternalFrame ventanaNuevaPartida;
     private javax.swing.JInternalFrame ventanaProvisional;
     // End of variables declaration//GEN-END:variables
