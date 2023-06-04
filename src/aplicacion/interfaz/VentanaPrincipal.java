@@ -121,10 +121,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         for (int i = 0; i < listaJugadores.length; i++) {
             
-            System.out.println("Valor de i: " + i);
-            System.out.println("Longitud listaJugadores: " + listaJugadores.length);
-            System.out.println("Longitud partida.rondas: " + partida.getRondas());
-            
             data[ronda][i] = listaJugadores[i].getPuntosActuales() ;
             
         }
@@ -413,6 +409,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         labelImagenTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplicacion/interfaz/imagenes/Tuki_titulo.jpg"))); // NOI18N
         marcoMostrarTabla.add(labelImagenTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 800, 260));
 
+        tablaPuntuaciones.setFont(new java.awt.Font("MV Boli", 0, 12)); // NOI18N
         tablaPuntuaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -423,8 +420,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane3.setViewportView(tablaPuntuaciones);
+        if (tablaPuntuaciones.getColumnModel().getColumnCount() > 0) {
+            tablaPuntuaciones.getColumnModel().getColumn(0).setResizable(false);
+            tablaPuntuaciones.getColumnModel().getColumn(1).setResizable(false);
+            tablaPuntuaciones.getColumnModel().getColumn(2).setResizable(false);
+            tablaPuntuaciones.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         marcoMostrarTabla.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 370, -1, 310));
 
@@ -631,7 +642,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
             jlabelIndicadorRondas.setText("RONDA " + (ronda +1)) ;
             
-            Utilidades.mostrarMensajeGUI("Dadle a OK cuando estéis listos para continuar.") ;
+            if ((ronda + 1) != partida.getRondas())
+            {
+                Utilidades.mostrarMensajeGUI("Dadle a OK cuando estéis listos para continuar.") ;
+            }
+            
         }
         
         botonConocerResultado.setVisible(true) ;
