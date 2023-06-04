@@ -27,6 +27,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private static Jugador[] listaJugadores ;
 //    private static int[] listaPuntos ;
     
+    private static Object[][] data ;
+    
     private static Partida partida ;
     
     
@@ -106,17 +108,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             puntos = Utilidades.leerEnteroGUI("Inserta la puntuación de " + listaJugadores[i].getNombre()) ;
             
             listaJugadores[i].setPuntosActuales(puntos) ;
+            listaJugadores[i].setPuntosTotales(puntos) ;
         }
     }
     
     
-    private static DefaultTableModel actualizarModeloTabla(int ronda){
+    private static DefaultTableModel actualizarModeloTabla(int ronda, Object[][] data){
         
          // CREACIÓN DEL MODELO PARA LA TABLA
         
           // Creación de los datos de la tabla en un array bidimensional
-          
-        Object[][] data = new Object[partida.getRondas()][listaJugadores.length] ;
         
         for (int i = 0; i < listaJugadores.length; i++) {
             
@@ -140,7 +141,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         // Crear el modelo de la tabla con los datos y los nombres de las columnas
         DefaultTableModel modeloTabla = new DefaultTableModel(data, columnaNombres) ;
-        
         
         return modeloTabla ;
     }
@@ -617,11 +617,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         botonConocerResultado.setVisible(false) ;
         
-        for (ronda = 0; ronda < partida.getRondas(); ronda++) {
+        data = new Object[partida.getRondas()][listaJugadores.length] ;
+        
+            for (ronda = 0; ronda < partida.getRondas(); ronda++) {
             
             sumarPuntos() ;
-        
-            tablaPuntuaciones.setModel(actualizarModeloTabla(ronda)) ;
+            
+            tablaPuntuaciones.setModel(actualizarModeloTabla(ronda, data)) ;
 
             ventanaListaJugadoresInicial.dispose() ;
 

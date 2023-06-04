@@ -135,7 +135,7 @@ public class Jugador {
              */
             public void setPuntosActuales(int puntosActuales) {
                 
-                this.puntosActuales += puntosActuales;
+                this.puntosActuales = puntosActuales ;
             }
             
             
@@ -148,6 +148,7 @@ public class Jugador {
              * @return Puntos totales del jugador/a durante todas sus partidas.
              */
             public int getPuntosTotales() {
+                
                 return puntosTotales;
             }
 
@@ -159,7 +160,7 @@ public class Jugador {
              */
             public void setPuntosTotales(int puntosTotales) {
                 
-                this.puntosTotales = puntosTotales;
+                this.puntosTotales += puntosTotales ;
             }
             
             
