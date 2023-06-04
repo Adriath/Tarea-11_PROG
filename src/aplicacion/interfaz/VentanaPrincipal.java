@@ -5,6 +5,8 @@ import aplicacion.modelos.Jugador;
 import aplicacion.modelos.Partida;
 import aplicacion.modelos.excepciones.ExcepcionJugador;
 import aplicacion.modelos.excepciones.ExcepcionPartida;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import utilidades.Utilidades;
 
 /**
@@ -123,12 +125,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         ventanaListaJugadoresInicial = new javax.swing.JInternalFrame();
         marcoListaJugadores = new javax.swing.JPanel();
         labelImagenListaJugadores = new javax.swing.JLabel();
-        botonJugar1 = new javax.swing.JButton();
+        botonContinuarListaJugadoresInicial = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         textAreaListaJugadoresInicialNOOO = new javax.swing.JTextArea();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane2 = new javax.swing.JScrollPane();
         textAreaListaJugadoresInicial = new javax.swing.JTextArea();
+        ventanaMostrarTabla = new javax.swing.JInternalFrame();
+        marcoMostrarTabla = new javax.swing.JPanel();
+        labelImagenTitulo = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tablaPuntuaciones = new javax.swing.JTable();
         menuPrincipal = new javax.swing.JPanel();
         botonNuevaPartida1 = new javax.swing.JButton();
         botonRanking = new javax.swing.JButton();
@@ -180,9 +187,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         marcoNuevaPartida.add(sliderNumeroRondas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, 310, 60));
 
         botonJugar.setFont(new java.awt.Font("MV Boli", 1, 36)); // NOI18N
-        botonJugar.setForeground(new java.awt.Color(0, 0, 255));
+        botonJugar.setForeground(new java.awt.Color(204, 0, 0));
         botonJugar.setText("¡A JUGAR!");
-        botonJugar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        botonJugar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 51)));
         botonJugar.setContentAreaFilled(false);
         botonJugar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonJugar.addActionListener(new java.awt.event.ActionListener() {
@@ -281,22 +288,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         labelImagenListaJugadores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplicacion/interfaz/imagenes/Tuki sobre fondo negro_editado.png"))); // NOI18N
         marcoListaJugadores.add(labelImagenListaJugadores, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, -30, -1, 580));
 
-        botonJugar1.setFont(new java.awt.Font("MV Boli", 1, 36)); // NOI18N
-        botonJugar1.setForeground(new java.awt.Color(0, 0, 255));
-        botonJugar1.setText("¡A JUGAR!");
-        botonJugar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        botonJugar1.setContentAreaFilled(false);
-        botonJugar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botonJugar1.addActionListener(new java.awt.event.ActionListener() {
+        botonContinuarListaJugadoresInicial.setFont(new java.awt.Font("MV Boli", 1, 36)); // NOI18N
+        botonContinuarListaJugadoresInicial.setForeground(new java.awt.Color(0, 0, 255));
+        botonContinuarListaJugadoresInicial.setText("Continuar");
+        botonContinuarListaJugadoresInicial.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 51, 153)));
+        botonContinuarListaJugadoresInicial.setContentAreaFilled(false);
+        botonContinuarListaJugadoresInicial.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botonContinuarListaJugadoresInicial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonJugar1ActionPerformed(evt);
+                botonContinuarListaJugadoresInicialActionPerformed(evt);
             }
         });
-        marcoListaJugadores.add(botonJugar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 410, 230, 100));
+        marcoListaJugadores.add(botonContinuarListaJugadoresInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 410, 230, 100));
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setToolTipText("");
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         textAreaListaJugadoresInicialNOOO.setEditable(false);
         textAreaListaJugadoresInicialNOOO.setBackground(new java.awt.Color(0, 0, 0));
@@ -308,19 +316,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         textAreaListaJugadoresInicialNOOO.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jScrollPane1.setViewportView(textAreaListaJugadoresInicialNOOO);
 
-        marcoListaJugadores.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 360, 100));
+        marcoListaJugadores.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 310, 100));
 
         jSeparator1.setBackground(new java.awt.Color(204, 204, 0));
         jSeparator1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 0)));
         marcoListaJugadores.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 197, 310, -1));
 
         jScrollPane2.setBorder(null);
+        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         textAreaListaJugadoresInicial.setEditable(false);
         textAreaListaJugadoresInicial.setBackground(new java.awt.Color(0, 0, 0));
         textAreaListaJugadoresInicial.setColumns(20);
-        textAreaListaJugadoresInicial.setFont(new java.awt.Font("MV Boli", 0, 18)); // NOI18N
+        textAreaListaJugadoresInicial.setFont(new java.awt.Font("MV Boli", 0, 20)); // NOI18N
         textAreaListaJugadoresInicial.setForeground(new java.awt.Color(204, 204, 0));
         textAreaListaJugadoresInicial.setRows(5);
         textAreaListaJugadoresInicial.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -342,6 +351,46 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         );
 
         marcoPrincipal.add(ventanaListaJugadoresInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 840, 580));
+
+        ventanaMostrarTabla.setTitle("Puntuaciones");
+        ventanaMostrarTabla.setVisible(false);
+
+        marcoMostrarTabla.setForeground(new java.awt.Color(204, 204, 204));
+        marcoMostrarTabla.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        labelImagenTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplicacion/interfaz/imagenes/Tuki_titulo.jpg"))); // NOI18N
+        marcoMostrarTabla.add(labelImagenTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 800, 260));
+
+        tablaPuntuaciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(tablaPuntuaciones);
+
+        marcoMostrarTabla.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 370, -1, 310));
+
+        javax.swing.GroupLayout ventanaMostrarTablaLayout = new javax.swing.GroupLayout(ventanaMostrarTabla.getContentPane());
+        ventanaMostrarTabla.getContentPane().setLayout(ventanaMostrarTablaLayout);
+        ventanaMostrarTablaLayout.setHorizontalGroup(
+            ventanaMostrarTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ventanaMostrarTablaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(marcoMostrarTabla, javax.swing.GroupLayout.DEFAULT_SIZE, 1056, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        ventanaMostrarTablaLayout.setVerticalGroup(
+            ventanaMostrarTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(marcoMostrarTabla, javax.swing.GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE)
+        );
+
+        marcoPrincipal.add(ventanaMostrarTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 1080, 780));
 
         menuPrincipal.setOpaque(false);
 
@@ -487,11 +536,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         textAreaListaJugadoresInicial.setText(muestraListaJugadores()) ;
         
+        Utilidades.mostrarMensajeGUI("Cuando hayáis jugado la primera ronda dadle a CONTINUAR. \n\n\n ░░░░░░░░▄▄▄▀▀▀▄▄███▄\n" +
+"░░░░░▄▀▀░░░░░░░▐░▀██▌\n" +
+"░░░▄▀░░░░▄▄███░▌▀▀░▀█\n" +
+"░░▄█░░▄▀▀▒▒▒▒▒▄▐░░░░█▌\n" +
+"░▐█▀▄▀▄▄▄▄▀▀▀▀▌░░░░░▐█▄\n" +
+"░▌▄▄▀▀░░░░░░░░▌░░░░▄███████▄\n" +
+"░░░░░░░░░░░░░▐░░░░▐███████████▄\n" +
+"░░░░░▒░░░░░░░▐░░░░▐█████████████▄\n" +
+"░░░░▒▒▒▒░░░░░░▀▄░░░▐██████████████▄\n" +
+"░░░░░░▒▒░░░░░░░░▀▄▄████████████████▄\n" +
+"░░░░░▒▒▒▒░░░░░░░░░░░░█▀██████▀") ;
+        
+        
     }//GEN-LAST:event_botonJugarActionPerformed
 
-    private void botonJugar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonJugar1ActionPerformed
+    private void botonContinuarListaJugadoresInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonContinuarListaJugadoresInicialActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_botonJugar1ActionPerformed
+    }//GEN-LAST:event_botonContinuarListaJugadoresInicialActionPerformed
 
     /**
      * @param args the command line arguments
@@ -529,23 +591,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonContinuarListaJugadoresInicial;
     private javax.swing.JButton botonJugar;
-    private javax.swing.JButton botonJugar1;
     private javax.swing.JButton botonNuevaPartida1;
     private javax.swing.JButton botonRanking;
     private javax.swing.JTextField cajaTextoNumeroJugadores1;
     private javax.swing.JLabel fondoPantalla;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel labelImagenListaJugadores;
     private javax.swing.JLabel labelImagenNuevaPartida;
     private javax.swing.JLabel labelImagenNuevaPartida1;
+    private javax.swing.JLabel labelImagenTitulo;
     private javax.swing.JLabel labelMenuPrincipal;
     private javax.swing.JLabel labelNumeroJugadores;
     private javax.swing.JLabel labelNumeroJugadores1;
     private javax.swing.JLabel labelNumeroRondas;
     private javax.swing.JPanel marcoListaJugadores;
+    private javax.swing.JPanel marcoMostrarTabla;
     private javax.swing.JPanel marcoNuevaPartida;
     private javax.swing.JPanel marcoNuevaPartida1;
     private javax.swing.JPanel marcoPrincipal;
@@ -554,9 +619,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JSeparator separadorNumeroJugadores1;
     private javax.swing.JSlider sliderNumeroJugadores;
     private javax.swing.JSlider sliderNumeroRondas;
+    private javax.swing.JTable tablaPuntuaciones;
     private javax.swing.JTextArea textAreaListaJugadoresInicial;
     private javax.swing.JTextArea textAreaListaJugadoresInicialNOOO;
     private javax.swing.JInternalFrame ventanaListaJugadoresInicial;
+    private javax.swing.JInternalFrame ventanaMostrarTabla;
     private javax.swing.JInternalFrame ventanaNuevaPartida;
     private javax.swing.JInternalFrame ventanaProvisional;
     // End of variables declaration//GEN-END:variables
