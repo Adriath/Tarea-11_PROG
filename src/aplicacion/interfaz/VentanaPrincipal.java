@@ -6,7 +6,6 @@ import aplicacion.modelos.Partida;
 import aplicacion.modelos.excepciones.ExcepcionJugador;
 import aplicacion.modelos.excepciones.ExcepcionPartida;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import utilidades.Utilidades;
 
 /**
@@ -23,10 +22,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private byte numeroRondas ;
     private byte numeroJugadores ;
     
+    private static int ronda = 0;
+    
     private static Jugador[] listaJugadores ;
 //    private static int[] listaPuntos ;
     
-    Partida partida ;
+    private static Partida partida ;
     
     
     // -------------- OONSTRUCTOR -------------------
@@ -93,6 +94,55 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
         
         return sb.toString() ;
+    }
+    
+    
+    private static void sumarPuntos(){
+        
+        int puntos ; 
+        
+        for (int i = 0; i < listaJugadores.length; i++) {
+            
+            puntos = Utilidades.leerEnteroGUI("Inserta la puntuación de " + listaJugadores[i].getNombre()) ;
+            
+            listaJugadores[i].setPuntosActuales(puntos) ;
+        }
+    }
+    
+    
+    private static DefaultTableModel actualizarModeloTabla(int ronda){
+        
+         // CREACIÓN DEL MODELO PARA LA TABLA
+        
+          // Creación de los datos de la tabla en un array bidimensional
+          
+        Object[][] data = new Object[partida.getRondas()][listaJugadores.length] ;
+        
+        for (int i = 0; i < listaJugadores.length; i++) {
+            
+            System.out.println("Valor de i: " + i);
+            System.out.println("Longitud listaJugadores: " + listaJugadores.length);
+            System.out.println("Longitud partida.rondas: " + partida.getRondas());
+            
+            data[ronda][i] = listaJugadores[i].getPuntosActuales() ;
+            
+        }
+            
+        
+
+        // Crear los nombres de las columnas
+        String[] columnaNombres = new String[listaJugadores.length] ;
+        
+        for (int i = 0; i < listaJugadores.length; i++) {
+            
+            columnaNombres[i] = listaJugadores[i].getNombre() ;
+        }
+
+        // Crear el modelo de la tabla con los datos y los nombres de las columnas
+        DefaultTableModel modeloTabla = new DefaultTableModel(data, columnaNombres) ;
+        
+        
+        return modeloTabla ;
     }
     
     
@@ -481,6 +531,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void botonNuevaPartida1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevaPartida1ActionPerformed
         ventanaNuevaPartida.setVisible(true) ;
+        
+        ronda = 0 ;
     }//GEN-LAST:event_botonNuevaPartida1ActionPerformed
 
     private void botonRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRankingActionPerformed
@@ -552,7 +604,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botonJugarActionPerformed
 
     private void botonContinuarListaJugadoresInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonContinuarListaJugadoresInicialActionPerformed
-        // TODO add your handling code here:
+        
+        sumarPuntos() ;
+        
+        tablaPuntuaciones.setModel(actualizarModeloTabla(ronda)) ;
+        
+        ventanaListaJugadoresInicial.dispose() ;
+        
+        ventanaMostrarTabla.setVisible(true) ;
+        
+        for (int i = 0; i < listaJugadores.length; i++) {
+            
+            System.out.println(listaJugadores[i].toString());
+        }
+        
     }//GEN-LAST:event_botonContinuarListaJugadoresInicialActionPerformed
 
     /**

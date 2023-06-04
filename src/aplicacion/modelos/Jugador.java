@@ -135,7 +135,7 @@ public class Jugador {
              */
             public void setPuntosActuales(int puntosActuales) {
                 
-                this.puntosActuales = puntosActuales;
+                this.puntosActuales += puntosActuales;
             }
             
             
