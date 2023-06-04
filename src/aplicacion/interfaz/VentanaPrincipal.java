@@ -186,6 +186,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         labelImagenTitulo = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tablaPuntuaciones = new javax.swing.JTable();
+        jlabelIndicadorRondas = new javax.swing.JLabel();
+        botonConocerResultado = new javax.swing.JButton();
         menuPrincipal = new javax.swing.JPanel();
         botonNuevaPartida1 = new javax.swing.JButton();
         botonRanking = new javax.swing.JButton();
@@ -426,6 +428,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         marcoMostrarTabla.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 370, -1, 310));
 
+        jlabelIndicadorRondas.setFont(new java.awt.Font("MV Boli", 0, 24)); // NOI18N
+        jlabelIndicadorRondas.setForeground(new java.awt.Color(204, 204, 0));
+        marcoMostrarTabla.add(jlabelIndicadorRondas, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 290, 200, 60));
+
+        botonConocerResultado.setFont(new java.awt.Font("MV Boli", 0, 18)); // NOI18N
+        botonConocerResultado.setText("Conocer resultado");
+        marcoMostrarTabla.add(botonConocerResultado, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 470, 210, 70));
+
         javax.swing.GroupLayout ventanaMostrarTablaLayout = new javax.swing.GroupLayout(ventanaMostrarTabla.getContentPane());
         ventanaMostrarTabla.getContentPane().setLayout(ventanaMostrarTablaLayout);
         ventanaMostrarTablaLayout.setHorizontalGroup(
@@ -605,13 +615,24 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void botonContinuarListaJugadoresInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonContinuarListaJugadoresInicialActionPerformed
         
-        sumarPuntos() ;
+        botonConocerResultado.setVisible(false) ;
         
-        tablaPuntuaciones.setModel(actualizarModeloTabla(ronda)) ;
+        for (ronda = 0; ronda < partida.getRondas(); ronda++) {
+            
+            sumarPuntos() ;
         
-        ventanaListaJugadoresInicial.dispose() ;
+            tablaPuntuaciones.setModel(actualizarModeloTabla(ronda)) ;
+
+            ventanaListaJugadoresInicial.dispose() ;
+
+            ventanaMostrarTabla.setVisible(true) ;
+
+            jlabelIndicadorRondas.setText("RONDA " + (ronda +1)) ;
+            
+            Utilidades.mostrarMensajeGUI("Dadle a OK cuando estéis listos para continuar.") ;
+        }
         
-        ventanaMostrarTabla.setVisible(true) ;
+        botonConocerResultado.setVisible(true) ;
         
         for (int i = 0; i < listaJugadores.length; i++) {
             
@@ -656,6 +677,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonConocerResultado;
     private javax.swing.JButton botonContinuarListaJugadoresInicial;
     private javax.swing.JButton botonJugar;
     private javax.swing.JButton botonNuevaPartida1;
@@ -666,6 +688,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel jlabelIndicadorRondas;
     private javax.swing.JLabel labelImagenListaJugadores;
     private javax.swing.JLabel labelImagenNuevaPartida;
     private javax.swing.JLabel labelImagenNuevaPartida1;
