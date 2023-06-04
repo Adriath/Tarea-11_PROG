@@ -53,11 +53,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             do 
             {
                 String nombre = Utilidades.leerCadenaGUI("Introduce el nombre del jugador/a " + (i + 1)) ;
+                validador = false ;
                 
                 try
                 {
                     listaJugadores[i] = new Jugador(nombre) ;
-                    validador = true ;
+                    
+                    if (listaJugadores[i] != null) 
+                    {
+                        validador = true ;
+                    }
                 }
                 catch(ExcepcionJugador e){
 
@@ -72,6 +77,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             } while (!validador);
         }
         
+    }
+    
+    
+    private static String muestraListaJugadores(){
+        
+        StringBuilder sb = new StringBuilder() ;
+        
+        for (int i = 0; i < listaJugadores.length; i++) {
+            
+            sb.append("\n") ;
+            sb.append(listaJugadores[i].getNombre()) ;
+        }
+        
+        return sb.toString() ;
     }
     
     
@@ -105,6 +124,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         marcoListaJugadores = new javax.swing.JPanel();
         labelImagenListaJugadores = new javax.swing.JLabel();
         botonJugar1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textAreaListaJugadoresInicialNOOO = new javax.swing.JTextArea();
+        jSeparator1 = new javax.swing.JSeparator();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        textAreaListaJugadoresInicial = new javax.swing.JTextArea();
         menuPrincipal = new javax.swing.JPanel();
         botonNuevaPartida1 = new javax.swing.JButton();
         botonRanking = new javax.swing.JButton();
@@ -268,7 +292,41 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 botonJugar1ActionPerformed(evt);
             }
         });
-        marcoListaJugadores.add(botonJugar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 230, 100));
+        marcoListaJugadores.add(botonJugar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 410, 230, 100));
+
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setToolTipText("");
+
+        textAreaListaJugadoresInicialNOOO.setEditable(false);
+        textAreaListaJugadoresInicialNOOO.setBackground(new java.awt.Color(0, 0, 0));
+        textAreaListaJugadoresInicialNOOO.setColumns(20);
+        textAreaListaJugadoresInicialNOOO.setFont(new java.awt.Font("MV Boli", 0, 24)); // NOI18N
+        textAreaListaJugadoresInicialNOOO.setForeground(new java.awt.Color(204, 204, 0));
+        textAreaListaJugadoresInicialNOOO.setRows(5);
+        textAreaListaJugadoresInicialNOOO.setText("¡Esta es la\nlista de jugadores!");
+        textAreaListaJugadoresInicialNOOO.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jScrollPane1.setViewportView(textAreaListaJugadoresInicialNOOO);
+
+        marcoListaJugadores.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 360, 100));
+
+        jSeparator1.setBackground(new java.awt.Color(204, 204, 0));
+        jSeparator1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 0)));
+        marcoListaJugadores.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 197, 310, -1));
+
+        jScrollPane2.setBorder(null);
+        jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+        textAreaListaJugadoresInicial.setEditable(false);
+        textAreaListaJugadoresInicial.setBackground(new java.awt.Color(0, 0, 0));
+        textAreaListaJugadoresInicial.setColumns(20);
+        textAreaListaJugadoresInicial.setFont(new java.awt.Font("MV Boli", 0, 18)); // NOI18N
+        textAreaListaJugadoresInicial.setForeground(new java.awt.Color(204, 204, 0));
+        textAreaListaJugadoresInicial.setRows(5);
+        textAreaListaJugadoresInicial.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jScrollPane2.setViewportView(textAreaListaJugadoresInicial);
+
+        marcoListaJugadores.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, 310, 190));
 
         javax.swing.GroupLayout ventanaListaJugadoresInicialLayout = new javax.swing.GroupLayout(ventanaListaJugadoresInicial.getContentPane());
         ventanaListaJugadoresInicial.getContentPane().setLayout(ventanaListaJugadoresInicialLayout);
@@ -427,6 +485,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         ventanaListaJugadoresInicial.pack() ;
         ventanaListaJugadoresInicial.setVisible(true) ;
         
+        textAreaListaJugadoresInicial.setText(muestraListaJugadores()) ;
+        
     }//GEN-LAST:event_botonJugarActionPerformed
 
     private void botonJugar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonJugar1ActionPerformed
@@ -475,6 +535,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botonRanking;
     private javax.swing.JTextField cajaTextoNumeroJugadores1;
     private javax.swing.JLabel fondoPantalla;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel labelImagenListaJugadores;
     private javax.swing.JLabel labelImagenNuevaPartida;
     private javax.swing.JLabel labelImagenNuevaPartida1;
@@ -491,6 +554,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JSeparator separadorNumeroJugadores1;
     private javax.swing.JSlider sliderNumeroJugadores;
     private javax.swing.JSlider sliderNumeroRondas;
+    private javax.swing.JTextArea textAreaListaJugadoresInicial;
+    private javax.swing.JTextArea textAreaListaJugadoresInicialNOOO;
     private javax.swing.JInternalFrame ventanaListaJugadoresInicial;
     private javax.swing.JInternalFrame ventanaNuevaPartida;
     private javax.swing.JInternalFrame ventanaProvisional;
