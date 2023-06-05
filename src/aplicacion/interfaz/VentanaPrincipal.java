@@ -243,6 +243,204 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
      
      
+     private static DefaultTableModel actualizarModeloTablaRankingPorPuntos(Object[][] data){
+        
+        ArrayList<Jugador> listaBDRanking = new ArrayList<>() ;
+                  
+        try
+        {
+            String nombre = "" ;
+            int puntos = 0 ;
+            int partidasJugadas ;
+            int partidasGanadas = 0 ;
+            
+            ConexionOracle conexion = new ConexionOracle() ;
+            
+            Connection conn = conexion.getConn() ;
+            
+            Statement leer = conn.createStatement() ;
+            ResultSet rs = leer.executeQuery("SELECT * FROM JUGADORES ORDER BY PUNTOS ASC") ;
+            
+            while (rs.next())
+            {
+                // Extraemos los valores de los atributos en Oracle y los guardamos en el proyecto en Java.
+                
+                nombre = rs.getString("NOMBRE") ;
+                puntos = rs.getInt("PUNTOS") ;
+                partidasJugadas = rs.getInt("PARTIDASJUGADAS") ;
+                partidasGanadas = rs.getInt("PARTIDASGANADAS") ;
+                
+                // Almacenamos el registro en el ArrayList.
+                
+                listaBDRanking.add(new Jugador(nombre, puntos, partidasJugadas, partidasGanadas)) ;
+            }
+             
+            conexion.desconectar() ;
+        }
+        catch(Exception e){
+            System.out.println("NO SE PUDO LISTAR.\n" + e.getMessage()) ;
+        }
+        
+        
+        // CREACIÓN DEL MODELO PARA LA TABLA
+        
+          // Creación de los datos de la tabla en un array bidimensional
+          
+        data = new Object[listaBDRanking.size()][4] ;
+        
+        for (int i = 0; i < listaBDRanking.size(); i++) {
+            
+            Jugador lista = listaBDRanking.get(i) ;
+            
+            data[i][0] = lista.getNombre() ;
+            data[i][1] = lista.getPuntosTotales() ;
+            data[i][2] = lista.getPartidasJugadas() ;
+            data[i][3] = lista.getPartidasGanadas() ;
+        }
+
+        // Crear los nombres de las columnas
+        String[] columnaNombres = { "Nombre", "Puntos", "Partidas Jugadas", "Partidas Ganadas"} ;
+
+        // Crear el modelo de la tabla con los datos y los nombres de las columnas
+        DefaultTableModel modeloTabla = new DefaultTableModel(data, columnaNombres) ;
+        
+        
+        return modeloTabla ;
+    }
+     
+     
+    private static DefaultTableModel actualizarModeloTablaRankingPorPartidasJugadas(Object[][] data){
+        
+        ArrayList<Jugador> listaBDRanking = new ArrayList<>() ;
+                  
+        try
+        {
+            String nombre = "" ;
+            int puntos = 0 ;
+            int partidasJugadas ;
+            int partidasGanadas = 0 ;
+            
+            ConexionOracle conexion = new ConexionOracle() ;
+            
+            Connection conn = conexion.getConn() ;
+            
+            Statement leer = conn.createStatement() ;
+            ResultSet rs = leer.executeQuery("SELECT * FROM JUGADORES ORDER BY PARTIDASJUGADAS DESC") ;
+            
+            while (rs.next())
+            {
+                // Extraemos los valores de los atributos en Oracle y los guardamos en el proyecto en Java.
+                
+                nombre = rs.getString("NOMBRE") ;
+                puntos = rs.getInt("PUNTOS") ;
+                partidasJugadas = rs.getInt("PARTIDASJUGADAS") ;
+                partidasGanadas = rs.getInt("PARTIDASGANADAS") ;
+                
+                // Almacenamos el registro en el ArrayList.
+                
+                listaBDRanking.add(new Jugador(nombre, puntos, partidasJugadas, partidasGanadas)) ;
+            }
+             
+            conexion.desconectar() ;
+        }
+        catch(Exception e){
+            System.out.println("NO SE PUDO LISTAR.\n" + e.getMessage()) ;
+        }
+        
+        
+        // CREACIÓN DEL MODELO PARA LA TABLA
+        
+          // Creación de los datos de la tabla en un array bidimensional
+          
+        data = new Object[listaBDRanking.size()][4] ;
+        
+        for (int i = 0; i < listaBDRanking.size(); i++) {
+            
+            Jugador lista = listaBDRanking.get(i) ;
+            
+            data[i][0] = lista.getNombre() ;
+            data[i][1] = lista.getPuntosTotales() ;
+            data[i][2] = lista.getPartidasJugadas() ;
+            data[i][3] = lista.getPartidasGanadas() ;
+        }
+
+        // Crear los nombres de las columnas
+        String[] columnaNombres = { "Nombre", "Puntos", "Partidas Jugadas", "Partidas Ganadas"} ;
+
+        // Crear el modelo de la tabla con los datos y los nombres de las columnas
+        DefaultTableModel modeloTabla = new DefaultTableModel(data, columnaNombres) ;
+        
+        
+        return modeloTabla ;
+    }
+    
+    
+    private static DefaultTableModel actualizarModeloTablaRankingPorPartidasGanadas(Object[][] data){
+        
+        ArrayList<Jugador> listaBDRanking = new ArrayList<>() ;
+                  
+        try
+        {
+            String nombre = "" ;
+            int puntos = 0 ;
+            int partidasJugadas ;
+            int partidasGanadas = 0 ;
+            
+            ConexionOracle conexion = new ConexionOracle() ;
+            
+            Connection conn = conexion.getConn() ;
+            
+            Statement leer = conn.createStatement() ;
+            ResultSet rs = leer.executeQuery("SELECT * FROM JUGADORES ORDER BY PARTIDASGANADAS DESC") ;
+            
+            while (rs.next())
+            {
+                // Extraemos los valores de los atributos en Oracle y los guardamos en el proyecto en Java.
+                
+                nombre = rs.getString("NOMBRE") ;
+                puntos = rs.getInt("PUNTOS") ;
+                partidasJugadas = rs.getInt("PARTIDASJUGADAS") ;
+                partidasGanadas = rs.getInt("PARTIDASGANADAS") ;
+                
+                // Almacenamos el registro en el ArrayList.
+                
+                listaBDRanking.add(new Jugador(nombre, puntos, partidasJugadas, partidasGanadas)) ;
+            }
+             
+            conexion.desconectar() ;
+        }
+        catch(Exception e){
+            System.out.println("NO SE PUDO LISTAR.\n" + e.getMessage()) ;
+        }
+        
+        
+        // CREACIÓN DEL MODELO PARA LA TABLA
+        
+          // Creación de los datos de la tabla en un array bidimensional
+          
+        data = new Object[listaBDRanking.size()][4] ;
+        
+        for (int i = 0; i < listaBDRanking.size(); i++) {
+            
+            Jugador lista = listaBDRanking.get(i) ;
+            
+            data[i][0] = lista.getNombre() ;
+            data[i][1] = lista.getPuntosTotales() ;
+            data[i][2] = lista.getPartidasJugadas() ;
+            data[i][3] = lista.getPartidasGanadas() ;
+        }
+
+        // Crear los nombres de las columnas
+        String[] columnaNombres = { "Nombre", "Puntos", "Partidas Jugadas", "Partidas Ganadas"} ;
+
+        // Crear el modelo de la tabla con los datos y los nombres de las columnas
+        DefaultTableModel modeloTabla = new DefaultTableModel(data, columnaNombres) ;
+        
+        
+        return modeloTabla ;
+    }
+     
+     
     private static String establecerGanador(){
          
          int ganador = 0 ;
@@ -494,6 +692,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         botonConocerResultado = new javax.swing.JButton();
         botonVolverTabla = new javax.swing.JButton();
         botonVaciarBD = new javax.swing.JButton();
+        jPanelBotonesOrdenarYBuscar = new javax.swing.JPanel();
+        botonOrdenarPorPuntos = new javax.swing.JButton();
+        botonOrdenarPorPJugadas = new javax.swing.JButton();
+        botonOrdenarPorPGanadas = new javax.swing.JButton();
+        botonBuscarPorNombre = new javax.swing.JButton();
         menuPrincipal = new javax.swing.JPanel();
         botonNuevaPartida1 = new javax.swing.JButton();
         botonRanking = new javax.swing.JButton();
@@ -780,6 +983,67 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         marcoMostrarTabla.add(botonVaciarBD, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 190, 170));
 
+        botonOrdenarPorPuntos.setText("Ordenar por PUNTOS");
+        botonOrdenarPorPuntos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonOrdenarPorPuntosActionPerformed(evt);
+            }
+        });
+
+        botonOrdenarPorPJugadas.setText("Ordenar por PARTIDAS JUGADAS");
+        botonOrdenarPorPJugadas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonOrdenarPorPJugadasActionPerformed(evt);
+            }
+        });
+
+        botonOrdenarPorPGanadas.setText("Ordenar por PARTIDAS GANADAS");
+        botonOrdenarPorPGanadas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonOrdenarPorPGanadasActionPerformed(evt);
+            }
+        });
+
+        botonBuscarPorNombre.setText("Buscar por NOMBRE");
+        botonBuscarPorNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonBuscarPorNombreActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelBotonesOrdenarYBuscarLayout = new javax.swing.GroupLayout(jPanelBotonesOrdenarYBuscar);
+        jPanelBotonesOrdenarYBuscar.setLayout(jPanelBotonesOrdenarYBuscarLayout);
+        jPanelBotonesOrdenarYBuscarLayout.setHorizontalGroup(
+            jPanelBotonesOrdenarYBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(jPanelBotonesOrdenarYBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelBotonesOrdenarYBuscarLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGroup(jPanelBotonesOrdenarYBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(botonOrdenarPorPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botonOrdenarPorPJugadas, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botonOrdenarPorPGanadas, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(botonBuscarPorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jPanelBotonesOrdenarYBuscarLayout.setVerticalGroup(
+            jPanelBotonesOrdenarYBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 380, Short.MAX_VALUE)
+            .addGroup(jPanelBotonesOrdenarYBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelBotonesOrdenarYBuscarLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(botonOrdenarPorPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(20, 20, 20)
+                    .addComponent(botonOrdenarPorPJugadas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(20, 20, 20)
+                    .addComponent(botonOrdenarPorPGanadas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(20, 20, 20)
+                    .addComponent(botonBuscarPorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        marcoMostrarTabla.add(jPanelBotonesOrdenarYBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 290, 300, 380));
+
         javax.swing.GroupLayout ventanaMostrarTablaLayout = new javax.swing.GroupLayout(ventanaMostrarTabla.getContentPane());
         ventanaMostrarTabla.getContentPane().setLayout(ventanaMostrarTablaLayout);
         ventanaMostrarTablaLayout.setHorizontalGroup(
@@ -1031,6 +1295,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         vaciarBD() ;
     }//GEN-LAST:event_botonVaciarBDActionPerformed
 
+    private void botonOrdenarPorPuntosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonOrdenarPorPuntosActionPerformed
+        
+        tablaPuntuaciones.setModel(actualizarModeloTablaRankingPorPuntos(dataRanking)) ;
+    }//GEN-LAST:event_botonOrdenarPorPuntosActionPerformed
+
+    private void botonBuscarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarPorNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonBuscarPorNombreActionPerformed
+
+    private void botonOrdenarPorPJugadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonOrdenarPorPJugadasActionPerformed
+        
+        tablaPuntuaciones.setModel(actualizarModeloTablaRankingPorPartidasJugadas(dataRanking)) ;
+    }//GEN-LAST:event_botonOrdenarPorPJugadasActionPerformed
+
+    private void botonOrdenarPorPGanadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonOrdenarPorPGanadasActionPerformed
+        
+        tablaPuntuaciones.setModel(actualizarModeloTablaRankingPorPartidasGanadas(dataRanking)) ;
+    }//GEN-LAST:event_botonOrdenarPorPGanadasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1067,15 +1350,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonBuscarPorNombre;
     private javax.swing.JButton botonConocerResultado;
     private javax.swing.JButton botonContinuarListaJugadoresInicial;
     private javax.swing.JButton botonJugar;
     private javax.swing.JButton botonNuevaPartida1;
+    private javax.swing.JButton botonOrdenarPorPGanadas;
+    private javax.swing.JButton botonOrdenarPorPJugadas;
+    private javax.swing.JButton botonOrdenarPorPuntos;
     private javax.swing.JButton botonRanking;
     private javax.swing.JButton botonVaciarBD;
     private javax.swing.JButton botonVolverTabla;
     private javax.swing.JTextField cajaTextoNumeroJugadores1;
     private javax.swing.JLabel fondoPantalla;
+    private javax.swing.JPanel jPanelBotonesOrdenarYBuscar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
