@@ -173,6 +173,7 @@ public class Jugador {
              * @return Total de partidas jugadas.
              */
             public int getPartidasJugadas() {
+                
                 return partidasJugadas;
             }
 
@@ -181,9 +182,8 @@ public class Jugador {
              * Método que modifica el total de partidas jugadas.
              * Suma una partida al total.
              * 
-             * @param partidasJugadas Total de partidas jugadas.
              */
-            public void setPartidasJugadas(int partidasJugadas) {
+            public void setPartidasJugadas() {
                 
                 this.partidasJugadas++ ;
             }
@@ -207,9 +207,8 @@ public class Jugador {
              * Método que modifica el total de partidas ganadas.
              * Suma una partida al total.
              * 
-             * @param partidasGanadas Total de partidas ganadas.
              */
-            public void setPartidasGanadas(int partidasGanadas) {
+            public void setPartidasGanadas() {
                 
                 this.partidasGanadas++ ;
             }

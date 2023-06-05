@@ -169,6 +169,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
      
      
+     private static String establecerGanador(){
+         
+         int ganador = 0 ;
+         String nombreGanador ;
+         
+         for (int i = 0; i < listaJugadores.length; i++) {
+             
+             if (listaJugadores[i].getPuntosTotales() < listaJugadores[ganador].getPuntosTotales()) {
+                 
+                 ganador = i ;
+             }
+             
+             listaJugadores[i].setPartidasJugadas() ;
+         }
+         
+         listaJugadores[ganador].setPartidasGanadas() ;
+         nombreGanador = listaJugadores[ganador].getNombre() ;
+         
+         return nombreGanador ;
+     }
+     
+     
     // ----------- CONTROL DE EVENTOS ----------------
     
     /**
@@ -698,6 +720,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jlabelIndicadorRondas.setText("PUNTOS TOTALES") ;
         
         tablaPuntuaciones.setModel(actualizarModeloTabla(data2)) ;
+        
+        Utilidades.mostrarMensajeGUI("El ganador es:\n" + establecerGanador());
+        
+        for (int i = 0; i < listaJugadores.length; i++) {
+            
+            System.out.println(listaJugadores[i].getNombre());
+            System.out.println("Puntos totales: " + listaJugadores[i].getPuntosTotales());
+            System.out.println("Partidas jugadas: " + listaJugadores[i].getPartidasJugadas());
+            System.out.println("Partidas ganadas " + listaJugadores[i].getPartidasGanadas());
+            System.out.println("------------------------------------------------------");
+        }
     }//GEN-LAST:event_botonConocerResultadoActionPerformed
 
     /**
