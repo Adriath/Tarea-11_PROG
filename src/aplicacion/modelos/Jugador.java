@@ -77,6 +77,17 @@ public class Jugador {
             this.esGanador = false ;
             
         }
+
+        public Jugador(String nombre, int puntosTotales, int partidasJugadas, int partidasGanadas) {
+            this.nombre = nombre;
+            puntosActuales = 0 ;
+            this.puntosTotales = puntosTotales;
+            this.partidasJugadas = partidasJugadas;
+            this.partidasGanadas = partidasGanadas;
+            this.esGanador = false ;
+        }
+        
+        
     
     
         // ----- GETTERS & SETTERS -----
@@ -187,6 +198,17 @@ public class Jugador {
                 
                 this.partidasJugadas++ ;
             }
+            
+            
+            /**
+             * Método que modifica el total de partidas jugadas.Suma una partida al total.
+             *
+             * @param partidasJugadas Total de partidas jugadas.
+             */
+            public void setPartidasJugadas(int partidasJugadas) {
+                
+                this.partidasJugadas = partidasJugadas ;
+            }
 
             
             // PARTIDAS GANADAS
@@ -211,6 +233,17 @@ public class Jugador {
             public void setPartidasGanadas() {
                 
                 this.partidasGanadas++ ;
+            }
+            
+            
+            /**
+             * Método que modifica el total de partidas ganadas.
+             * 
+             * @param partidasGanadas Total de partidas ganadas.
+             */
+            public void setPartidasGanadas(int partidasGanadas) {
+                
+                this.partidasGanadas = partidasGanadas ;
             }
             
             

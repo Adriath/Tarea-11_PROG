@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utilidades.Utilidades;
@@ -34,6 +35,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     private static Object[][] data ;
     private static Object[][] data2 ;
+    private static Object[][] dataRanking ;
     
     private static Partida partida ;
     
@@ -173,6 +175,72 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         return modeloTabla ;
     }
+    
+    
+     private static DefaultTableModel actualizarModeloTablaRanking(Object[][] data){
+        
+        ArrayList<Jugador> listaBDRanking = new ArrayList<>() ;
+                  
+        try
+        {
+            String nombre = "" ;
+            int puntos = 0 ;
+            int partidasJugadas ;
+            int partidasGanadas = 0 ;
+            
+            ConexionOracle conexion = new ConexionOracle() ;
+            
+            Connection conn = conexion.getConn() ;
+            
+            Statement leer = conn.createStatement() ;
+            ResultSet rs = leer.executeQuery("SELECT * FROM JUGADORES") ;
+            
+            while (rs.next())
+            {
+                // Extraemos los valores de los atributos en Oracle y los guardamos en el proyecto en Java.
+                
+                nombre = rs.getString("NOMBRE") ;
+                puntos = rs.getInt("PUNTOS") ;
+                partidasJugadas = rs.getInt("PARTIDASJUGADAS") ;
+                partidasGanadas = rs.getInt("PARTIDASGANADAS") ;
+                
+                // Almacenamos el registro en el ArrayList.
+                
+                listaBDRanking.add(new Jugador(nombre, puntos, partidasJugadas, partidasGanadas)) ;
+            }
+             
+            conexion.desconectar() ;
+        }
+        catch(Exception e){
+            System.out.println("NO SE PUDO LISTAR.\n" + e.getMessage()) ;
+        }
+        
+        
+        // CREACIÓN DEL MODELO PARA LA TABLA
+        
+          // Creación de los datos de la tabla en un array bidimensional
+          
+        data = new Object[listaBDRanking.size()][4] ;
+        
+        for (int i = 0; i < listaBDRanking.size(); i++) {
+            
+            Jugador lista = listaBDRanking.get(i) ;
+            
+            data[i][0] = lista.getNombre() ;
+            data[i][1] = lista.getPuntosTotales() ;
+            data[i][2] = lista.getPartidasJugadas() ;
+            data[i][3] = lista.getPartidasGanadas() ;
+        }
+
+        // Crear los nombres de las columnas
+        String[] columnaNombres = { "Nombre", "Puntos", "Partidas Jugadas", "Partidas Ganadas"} ;
+
+        // Crear el modelo de la tabla con los datos y los nombres de las columnas
+        DefaultTableModel modeloTabla = new DefaultTableModel(data, columnaNombres) ;
+        
+        
+        return modeloTabla ;
+    }
      
      
     private static String establecerGanador(){
@@ -292,10 +360,57 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             encontrado = compruebaSiExiste(i) ;
             
             if (encontrado) 
+                // Si el jugador ya existe actualizará los datos
             {
-                System.out.println("EL NOMBRE YA EXISTE") ;
+                try {
+
+                    int pos = 1 ; // Posición de la variable en la base de datos.
+
+                    ConexionOracle conexion = new ConexionOracle() ;
+
+                    Connection conn = conexion.getConn() ;
+
+                    // Actualización de puntos
+
+                    String SQLq = "UPDATE JUGADORES SET PUNTOS = PUNTOS + " + listaJugadores[i].getPuntosTotales() + " WHERE NOMBRE = '" + listaJugadores[i].getNombre() + "'" ;
+
+                    PreparedStatement ps = conn.prepareStatement(SQLq, Statement.RETURN_GENERATED_KEYS) ;
+
+                    ps.executeUpdate() ;
+
+                    System.out.println("PUNTOS de jugador/a " + listaJugadores[i].getNombre() + " actualizados.") ;
+                    
+                    // Actualización de partidas jugadas
+
+                    SQLq = "UPDATE JUGADORES SET PARTIDASJUGADAS = PARTIDASJUGADAS+ " + listaJugadores[i].getPartidasJugadas() + " WHERE NOMBRE = '" + listaJugadores[i].getNombre() + "'" ;
+
+                    ps = conn.prepareStatement(SQLq, Statement.RETURN_GENERATED_KEYS) ;
+
+                    ps.executeUpdate() ;
+
+                    System.out.println("PARTIDAS JUGADAS de jugador/a " + listaJugadores[i].getNombre() + " actualizados.") ;
+                    
+                    // Actualización de partidas ganadas
+
+                    SQLq = "UPDATE JUGADORES SET PARTIDASGANADAS = PARTIDASGANADAS + " + listaJugadores[i].getPartidasGanadas() + " WHERE NOMBRE = '" + listaJugadores[i].getNombre() + "'" ;
+
+                    ps = conn.prepareStatement(SQLq, Statement.RETURN_GENERATED_KEYS) ;
+
+                    ps.executeUpdate() ;
+
+                    System.out.println("PARTIDAS GANADAS de jugador/a " + listaJugadores[i].getNombre() + " actualizados.") ;
+
+                    conexion.desconectar() ;
+                    conn.close() ;
+                    ps.close() ;
+                }   
+                catch (Exception e) {
+                    System.out.println("No se he añadido el valor a la tabla de la base de datos.\n El/La jugador/a " + listaJugadores[i].getNombre() + " ya existe.") ;
+                    System.out.println(e.getMessage()) ;
+                }
             }
             else
+                // Si el jugador no existe lo creará.
             {
                 try {
 
@@ -782,6 +897,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         jlabelIndicadorRondas.setText("RANKING") ;
         
+        tablaPuntuaciones.setModel(actualizarModeloTablaRanking(dataRanking)) ;
         
     }//GEN-LAST:event_botonRankingActionPerformed
 
