@@ -1,10 +1,16 @@
 
 package aplicacion.interfaz;
 
+import aplicacion.gestionBD.ConexionOracle;
 import aplicacion.modelos.Jugador;
 import aplicacion.modelos.Partida;
 import aplicacion.modelos.excepciones.ExcepcionJugador;
 import aplicacion.modelos.excepciones.ExcepcionPartida;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utilidades.Utilidades;
 
@@ -86,6 +92,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     
     private static String muestraListaJugadores(){
+        // LISTA DE JUGADORES EN LA PANTALLA INICIAL
         
         StringBuilder sb = new StringBuilder() ;
         
@@ -140,7 +147,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
     
     
-     private static DefaultTableModel actualizarModeloTabla(Object[][] data){
+    private static DefaultTableModel actualizarModeloTabla(Object[][] data){
         
         
         // CREACIÓN DEL MODELO PARA LA TABLA
@@ -168,7 +175,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
      
      
-     private static String establecerGanador(){
+    private static String establecerGanador(){
          
          int ganador = 0 ;
          String nombreGanador ;
@@ -188,6 +195,144 @@ public class VentanaPrincipal extends javax.swing.JFrame {
          
          return nombreGanador ;
      }
+     
+     
+    /**
+     * Método que nos elimina el fichero de datos del disco.
+     */
+    private static void vaciarBD(){
+        
+        int respuesta ;
+        boolean borrado ;
+        
+        try
+        {
+            ConexionOracle conexion = new ConexionOracle() ;
+            
+            Connection conn = conexion.getConn() ;
+            
+            Statement leer = conn.createStatement() ;
+            
+            String consulta = "DELETE FROM JUGADORES" ;
+            
+            // Mensaje de confirmación para borrar el fichero
+
+            respuesta = JOptionPane.showConfirmDialog(null, "¿Deseas vaciar la base de datos?", "Confirmación", JOptionPane.YES_NO_OPTION) ;
+
+            if (respuesta == JOptionPane.YES_OPTION)
+                //Si la respuesta es sí...
+            {
+                leer.executeUpdate(consulta) ; // ... vacía la tabla de la base de datos.
+
+                Utilidades.mostrarMensajeGUI("BASE DE DATOS VACÍA.") ; // Avisa con un mensaje
+                
+                conexion.desconectar() ;
+            }
+            else
+                // Si la respuesta es no o no se contesta...
+            {
+                Utilidades.mostrarMensajeGUI("NO SE HA REALIZADO NINGUNA ACCIÓN."); // ... avisa diciendo que no se hizo nada.
+            }
+        }
+        catch (Exception e){
+            System.err.println("\nAlgún error ocurrió: " + e.getMessage());
+        }
+        
+    }
+    
+    
+    private static boolean compruebaSiExiste(int posicion){
+        
+        String nombreBD ;
+        
+        boolean encontrado = false ;
+
+        // Primero vamos a hacer la consulta a la base de datos
+        
+        try
+          {
+              ConexionOracle conexion = new ConexionOracle() ;
+
+              Connection conn = conexion.getConn() ;
+
+              Statement leer = conn.createStatement() ;
+
+              String consulta = "SELECT * FROM JUGADORES WHERE NOMBRE = '" + listaJugadores[posicion].getNombre() + "'" ;
+
+              ResultSet resultado = leer.executeQuery(consulta) ;
+
+
+              while (resultado.next())
+              {
+                  nombreBD = resultado.getString("NOMBRE") ;
+                  
+                  encontrado = true ;
+              }
+
+              conexion.desconectar() ;
+              conn.close() ;
+              leer.close() ;
+              resultado.close() ;
+          }
+        catch(Exception e){
+
+              Utilidades.mostrarMensajeGUI("No se pudo conectar con la base de datos.\n" + e.getMessage()) ;
+        }
+        
+        return encontrado ;
+    }
+    
+    
+    private static void aniadirRegistroBD(){
+        
+        boolean encontrado = false ;
+        
+        for (int i = 0; i < listaJugadores.length; i++) {
+            
+            encontrado = compruebaSiExiste(i) ;
+            
+            if (encontrado) 
+            {
+                System.out.println("EL NOMBRE YA EXISTE") ;
+            }
+            else
+            {
+                try {
+
+                    int pos = 1 ; // Posición de la variable en la base de datos.
+
+                    ConexionOracle conexion = new ConexionOracle() ;
+
+                    Connection conn = conexion.getConn() ;
+
+                    // Creamos la sentencia que va a dar la orden de intertar datos en Oracle.
+
+                    String SQLq = "INSERT INTO JUGADORES VALUES (TIPO_JUGADOR(?,?,?,?))" ;
+
+                    PreparedStatement ps = conn.prepareStatement(SQLq, Statement.RETURN_GENERATED_KEYS) ;
+
+                    // Añadimos los valores de la base de datos hacia el proyecto de Java.
+
+                    ps.setString(pos, listaJugadores[i].getNombre()) ;
+                    ps.setInt(++pos, listaJugadores[i].getPuntosTotales()) ;
+                    ps.setInt(++pos, listaJugadores[i].getPartidasJugadas()) ;
+                    ps.setInt(++pos, listaJugadores[i].getPartidasGanadas()) ;
+
+                    ps.executeUpdate() ;
+
+                    System.out.println("Jugador/a " + listaJugadores[i].getNombre() + " añadido/a") ;
+
+                    conexion.desconectar() ;
+                    conn.close() ;
+                    ps.close() ;
+                }   
+                catch (Exception e) {
+                    System.out.println("No se he añadido el valor a la tabla de la base de datos.\n El/La jugador/a " + listaJugadores[i].getNombre() + " ya existe.") ;
+                    System.out.println(e.getMessage()) ;
+                }
+            }
+        }
+    }
      
      
     // ----------- CONTROL DE EVENTOS ----------------
@@ -233,6 +378,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jlabelIndicadorRondas = new javax.swing.JLabel();
         botonConocerResultado = new javax.swing.JButton();
         botonVolverTabla = new javax.swing.JButton();
+        botonVaciarBD = new javax.swing.JButton();
         menuPrincipal = new javax.swing.JPanel();
         botonNuevaPartida1 = new javax.swing.JButton();
         botonRanking = new javax.swing.JButton();
@@ -490,7 +636,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         marcoMostrarTabla.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 370, -1, 190));
 
         jlabelIndicadorRondas.setFont(new java.awt.Font("MV Boli", 0, 24)); // NOI18N
-        jlabelIndicadorRondas.setForeground(new java.awt.Color(204, 204, 0));
+        jlabelIndicadorRondas.setForeground(new java.awt.Color(0, 0, 0));
         jlabelIndicadorRondas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         marcoMostrarTabla.add(jlabelIndicadorRondas, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 290, 400, 60));
 
@@ -510,6 +656,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         marcoMostrarTabla.add(botonVolverTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 610, 210, 70));
+
+        botonVaciarBD.setText("VACIAR BASE DE DATOS");
+        botonVaciarBD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonVaciarBDActionPerformed(evt);
+            }
+        });
+        marcoMostrarTabla.add(botonVaciarBD, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 190, 170));
 
         javax.swing.GroupLayout ventanaMostrarTablaLayout = new javax.swing.GroupLayout(ventanaMostrarTabla.getContentPane());
         ventanaMostrarTabla.getContentPane().setLayout(ventanaMostrarTablaLayout);
@@ -622,7 +776,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void botonRankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRankingActionPerformed
         
-        Utilidades.mostrarMensajeGUI("¡En construcción!") ;
+        ventanaMostrarTabla.setVisible(true) ;
+        
+        botonConocerResultado.setVisible(false) ;
+        
+        jlabelIndicadorRondas.setText("RANKING") ;
+        
+        
     }//GEN-LAST:event_botonRankingActionPerformed
 
     private void cajaTextoNumeroJugadores1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cajaTextoNumeroJugadores1MouseClicked
@@ -741,12 +901,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             System.out.println("Partidas ganadas " + listaJugadores[i].getPartidasGanadas());
             System.out.println("------------------------------------------------------");
         }
+        
+        aniadirRegistroBD() ;
     }//GEN-LAST:event_botonConocerResultadoActionPerformed
 
     private void botonVolverTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVolverTablaActionPerformed
         
         ventanaMostrarTabla.dispose() ;
     }//GEN-LAST:event_botonVolverTablaActionPerformed
+
+    private void botonVaciarBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVaciarBDActionPerformed
+        
+        vaciarBD() ;
+    }//GEN-LAST:event_botonVaciarBDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -789,6 +956,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botonJugar;
     private javax.swing.JButton botonNuevaPartida1;
     private javax.swing.JButton botonRanking;
+    private javax.swing.JButton botonVaciarBD;
     private javax.swing.JButton botonVolverTabla;
     private javax.swing.JTextField cajaTextoNumeroJugadores1;
     private javax.swing.JLabel fondoPantalla;
