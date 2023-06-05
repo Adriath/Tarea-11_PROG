@@ -439,6 +439,80 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         return modeloTabla ;
     }
+    
+    
+     private static DefaultTableModel actualizarModeloTablaRankingPorNombre(Object[][] data, String nombreBusqueda){
+        
+        ArrayList<Jugador> listaBDRanking = new ArrayList<>() ;
+                  
+        try
+        {
+            String nombre = "" ;
+            int puntos = 0 ;
+            int partidasJugadas ;
+            int partidasGanadas = 0 ;
+            
+            ConexionOracle conexion = new ConexionOracle() ;
+            
+            Connection conn = conexion.getConn() ;
+            
+            Statement leer = conn.createStatement() ;
+            ResultSet rs = leer.executeQuery("SELECT * FROM JUGADORES WHERE NOMBRE = '" + nombreBusqueda + "'") ;
+            
+            while (rs.next())
+            {
+                // Extraemos los valores de los atributos en Oracle y los guardamos en el proyecto en Java.
+                
+                nombre = rs.getString("NOMBRE") ;
+                puntos = rs.getInt("PUNTOS") ;
+                partidasJugadas = rs.getInt("PARTIDASJUGADAS") ;
+                partidasGanadas = rs.getInt("PARTIDASGANADAS") ;
+                
+                // Almacenamos el registro en el ArrayList.
+                
+                listaBDRanking.add(new Jugador(nombre, puntos, partidasJugadas, partidasGanadas)) ;
+            }
+            
+            if (listaBDRanking.isEmpty()) 
+            {
+                Utilidades.mostrarMensajeGUI("El nombre \n" + nombreBusqueda + " \nNO EXISTE.") ;
+            }
+             
+            conexion.desconectar() ;
+            conn.close() ;
+            leer.close() ;
+            rs.close() ;
+        }
+        catch(Exception e){
+            System.out.println("NO SE PUDO LISTAR.\n" + e.getMessage()) ;
+        }
+        
+        
+        // CREACIÓN DEL MODELO PARA LA TABLA
+        
+          // Creación de los datos de la tabla en un array bidimensional
+          
+        data = new Object[listaBDRanking.size()][4] ;
+        
+        for (int i = 0; i < listaBDRanking.size(); i++) {
+            
+            Jugador lista = listaBDRanking.get(i) ;
+            
+            data[i][0] = lista.getNombre() ;
+            data[i][1] = lista.getPuntosTotales() ;
+            data[i][2] = lista.getPartidasJugadas() ;
+            data[i][3] = lista.getPartidasGanadas() ;
+        }
+
+        // Crear los nombres de las columnas
+        String[] columnaNombres = { "Nombre", "Puntos", "Partidas Jugadas", "Partidas Ganadas"} ;
+
+        // Crear el modelo de la tabla con los datos y los nombres de las columnas
+        DefaultTableModel modeloTabla = new DefaultTableModel(data, columnaNombres) ;
+        
+        
+        return modeloTabla ;
+    }
      
      
     private static String establecerGanador(){
@@ -1301,7 +1375,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botonOrdenarPorPuntosActionPerformed
 
     private void botonBuscarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonBuscarPorNombreActionPerformed
-        // TODO add your handling code here:
+        
+        String nombreBusqueda = Utilidades.leerCadenaGUI("Introduce el nombre que quieres buscar: ") ;
+        
+        tablaPuntuaciones.setModel(actualizarModeloTablaRankingPorNombre(dataRanking, nombreBusqueda)) ;
     }//GEN-LAST:event_botonBuscarPorNombreActionPerformed
 
     private void botonOrdenarPorPJugadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonOrdenarPorPJugadasActionPerformed
