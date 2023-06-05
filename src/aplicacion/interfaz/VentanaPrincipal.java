@@ -25,7 +25,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private static int ronda = 0;
     
     private static Jugador[] listaJugadores ;
-//    private static int[] listaPuntos ;
     
     private static Object[][] data ;
     private static Object[][] data2 ;
@@ -233,6 +232,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         tablaPuntuaciones = new javax.swing.JTable();
         jlabelIndicadorRondas = new javax.swing.JLabel();
         botonConocerResultado = new javax.swing.JButton();
+        botonVolverTabla = new javax.swing.JButton();
         menuPrincipal = new javax.swing.JPanel();
         botonNuevaPartida1 = new javax.swing.JButton();
         botonRanking = new javax.swing.JButton();
@@ -491,7 +491,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jlabelIndicadorRondas.setFont(new java.awt.Font("MV Boli", 0, 24)); // NOI18N
         jlabelIndicadorRondas.setForeground(new java.awt.Color(204, 204, 0));
-        marcoMostrarTabla.add(jlabelIndicadorRondas, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 290, 200, 60));
+        jlabelIndicadorRondas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        marcoMostrarTabla.add(jlabelIndicadorRondas, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 290, 400, 60));
 
         botonConocerResultado.setFont(new java.awt.Font("MV Boli", 0, 18)); // NOI18N
         botonConocerResultado.setText("Conocer resultado");
@@ -501,6 +502,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         marcoMostrarTabla.add(botonConocerResultado, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 610, 210, 70));
+
+        botonVolverTabla.setText("VOLVER");
+        botonVolverTabla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonVolverTablaActionPerformed(evt);
+            }
+        });
+        marcoMostrarTabla.add(botonVolverTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 610, 210, 70));
 
         javax.swing.GroupLayout ventanaMostrarTablaLayout = new javax.swing.GroupLayout(ventanaMostrarTabla.getContentPane());
         ventanaMostrarTabla.getContentPane().setLayout(ventanaMostrarTablaLayout);
@@ -681,6 +690,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void botonContinuarListaJugadoresInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonContinuarListaJugadoresInicialActionPerformed
         
+        botonVolverTabla.setVisible(false) ;
+        
         botonConocerResultado.setVisible(false) ;
         
         data = new Object[partida.getRondas()][listaJugadores.length] ;
@@ -706,16 +717,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         botonConocerResultado.setVisible(true) ;
         
-        for (int i = 0; i < listaJugadores.length; i++) {
-            
-            System.out.println(listaJugadores[i].toString());
-        }
-        
     }//GEN-LAST:event_botonContinuarListaJugadoresInicialActionPerformed
 
     private void botonConocerResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConocerResultadoActionPerformed
         
         data2 = new Object[1][listaJugadores.length] ;
+        
+        botonConocerResultado.setVisible(false) ;
+        
+        botonVolverTabla.setVisible(true) ;
         
         jlabelIndicadorRondas.setText("PUNTOS TOTALES") ;
         
@@ -732,6 +742,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             System.out.println("------------------------------------------------------");
         }
     }//GEN-LAST:event_botonConocerResultadoActionPerformed
+
+    private void botonVolverTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVolverTablaActionPerformed
+        
+        ventanaMostrarTabla.dispose() ;
+    }//GEN-LAST:event_botonVolverTablaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -774,6 +789,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botonJugar;
     private javax.swing.JButton botonNuevaPartida1;
     private javax.swing.JButton botonRanking;
+    private javax.swing.JButton botonVolverTabla;
     private javax.swing.JTextField cajaTextoNumeroJugadores1;
     private javax.swing.JLabel fondoPantalla;
     private javax.swing.JScrollPane jScrollPane1;

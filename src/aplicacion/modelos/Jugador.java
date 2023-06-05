@@ -246,9 +246,13 @@ public class Jugador {
 
         @Override
         public String toString() {
+            
             StringBuilder sb = new StringBuilder();
-            sb.append("\nJugador/a = ").append(nombre);
-            sb.append(" // Puntos = ").append(puntosActuales) ;
+            
+            sb.append("\nJugador/a = ").append(getNombre());
+            sb.append(" \n// Puntos = ").append(getPuntosTotales()) ;
+            sb.append(" \n// Partidas jugadas = ").append(getPartidasJugadas()) ;
+            sb.append(" \n// Partidas ganadas = ").append(getPartidasGanadas()) ;
             
             return sb.toString();
         }

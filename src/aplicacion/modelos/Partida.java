@@ -1,7 +1,6 @@
 
 package aplicacion.modelos;
 
-import aplicacion.modelos.excepciones.ExcepcionJugador;
 import aplicacion.modelos.excepciones.ExcepcionPartida;
 
 /**
@@ -176,10 +175,15 @@ public class Partida {
 
             StringBuilder sb = new StringBuilder() ;
             
-            sb.append("Número de rondas = ").append(rondas) ;
-            sb.append("\nNúmero de jugadores = ").append(numJugadores) ;
+            sb.append("Número de rondas = ").append(getRondas()) ;
+            sb.append("\nNúmero de jugadores = ").append(getNumJugadores()) ;
             sb.append("\nPUNTUACIONES: ") ;
             sb.append("\n---------------- = ") ;
+            
+            for (int i = 0; i < listaJugadores.length; i++) {
+                
+                listaJugadores[i].toString() ;
+            }
 
             return sb.toString();
         }
