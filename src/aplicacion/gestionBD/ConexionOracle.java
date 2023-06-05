@@ -85,4 +85,9 @@ public class ConexionOracle {
         }
     }
     
+//    public static void main(String[] args) { // --------------------- MÉTODO MAIN DE PRUEBAS ------------------------
+//        
+//        ConexionOracle conn = new ConexionOracle();
+//        conn.desconectar();
+//    }
 }
