@@ -199,57 +199,57 @@ public class Partida {
 //        }
         
         
-        
-        // --------------------------------------------------
-        // -------------- MAIN DE PRUEBAS -------------------
-        // --------------------------------------------------
-        
-            
-        public static void main(String[] args) {
-        
-         Partida partida1 = null;
-         
-         Jugador listaJugadores[] = new Jugador[3]; 
-         
-         Jugador jugador1 = null ;
-         Jugador jugador2 = null ;
-         Jugador jugador3 = null ;
-         
-         try
-         {
-            jugador1 = new Jugador("Adrián") ;
-            jugador2 = new Jugador("Sara") ;
-            jugador3 = new Jugador("Margari") ;
-         }
-         catch(ExcepcionJugador e){
-             
-             System.out.println("Error jugador") ;
-         }
-         
-         
-         try
-         {
-             partida1 = new Partida((byte)2, (byte)3, listaJugadores) ;
-         }
-         catch(ExcepcionPartida e){
-             System.out.println(e.getMessage()) ;
-         }
-         
-        
-         
-         listaJugadores[0] = jugador1 ;
-         listaJugadores[1] = jugador2 ;
-         listaJugadores[2] = jugador3 ;
-         
-         jugador1.setPuntosActuales(50);
-         jugador2.setPuntosActuales(30);
-         jugador3.setPuntosActuales(-4);
-         
-            System.out.println(partida1.toString());
-            for (int i = 0; i < listaJugadores.length; i++) 
-            {
-                System.out.println(listaJugadores[i].toString() );
-            }
-    }
+//        
+//        // --------------------------------------------------
+//        // -------------- MAIN DE PRUEBAS -------------------
+//        // --------------------------------------------------
+//        
+//            
+//        public static void main(String[] args) {
+//        
+//         Partida partida1 = null;
+//         
+//         Jugador listaJugadores[] = new Jugador[3]; 
+//         
+//         Jugador jugador1 = null ;
+//         Jugador jugador2 = null ;
+//         Jugador jugador3 = null ;
+//         
+//         try
+//         {
+//            jugador1 = new Jugador("Adrián") ;
+//            jugador2 = new Jugador("Sara") ;
+//            jugador3 = new Jugador("Margari") ;
+//         }
+//         catch(ExcepcionJugador e){
+//             
+//             System.out.println("Error jugador") ;
+//         }
+//         
+//         
+//         try
+//         {
+//             partida1 = new Partida((byte)2, (byte)3, listaJugadores) ;
+//         }
+//         catch(ExcepcionPartida e){
+//             System.out.println(e.getMessage()) ;
+//         }
+//         
+//        
+//         
+//         listaJugadores[0] = jugador1 ;
+//         listaJugadores[1] = jugador2 ;
+//         listaJugadores[2] = jugador3 ;
+//         
+//         jugador1.setPuntosActuales(50);
+//         jugador2.setPuntosActuales(30);
+//         jugador3.setPuntosActuales(-4);
+//         
+//            System.out.println(partida1.toString());
+//            for (int i = 0; i < listaJugadores.length; i++) 
+//            {
+//                System.out.println(listaJugadores[i].toString() );
+//            }
+//    }
             
 }

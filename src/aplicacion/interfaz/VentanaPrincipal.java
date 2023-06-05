@@ -28,6 +28,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 //    private static int[] listaPuntos ;
     
     private static Object[][] data ;
+    private static Object[][] data2 ;
     
     private static Partida partida ;
     
@@ -124,8 +125,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             data[ronda][i] = listaJugadores[i].getPuntosActuales() ;
             
         }
-            
-        
 
         // Crear los nombres de las columnas
         String[] columnaNombres = new String[listaJugadores.length] ;
@@ -142,6 +141,34 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
     
     
+     private static DefaultTableModel actualizarModeloTabla(Object[][] data){
+        
+        
+        // CREACIÓN DEL MODELO PARA LA TABLA
+        
+        // Creación de los datos de la tabla en un array bidimensional
+        
+        for (int i = 0; i < listaJugadores.length; i++) {
+            
+            data[0][i] = listaJugadores[i].getPuntosTotales() ;
+            
+        }
+
+        // Crear los nombres de las columnas
+        String[] columnaNombres = new String[listaJugadores.length] ;
+        
+        for (int i = 0; i < listaJugadores.length; i++) {
+            
+            columnaNombres[i] = listaJugadores[i].getNombre() ;
+        }
+
+        // Crear el modelo de la tabla con los datos y los nombres de las columnas
+        DefaultTableModel modeloTabla = new DefaultTableModel(data, columnaNombres) ;
+        
+        return modeloTabla ;
+    }
+     
+     
     // ----------- CONTROL DE EVENTOS ----------------
     
     /**
@@ -409,7 +436,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         labelImagenTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplicacion/interfaz/imagenes/Tuki_titulo.jpg"))); // NOI18N
         marcoMostrarTabla.add(labelImagenTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 800, 260));
 
-        tablaPuntuaciones.setFont(new java.awt.Font("MV Boli", 0, 12)); // NOI18N
+        tablaPuntuaciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
+        tablaPuntuaciones.setFont(new java.awt.Font("MV Boli", 0, 18)); // NOI18N
         tablaPuntuaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -437,7 +465,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             tablaPuntuaciones.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        marcoMostrarTabla.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 370, -1, 310));
+        marcoMostrarTabla.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 370, -1, 190));
 
         jlabelIndicadorRondas.setFont(new java.awt.Font("MV Boli", 0, 24)); // NOI18N
         jlabelIndicadorRondas.setForeground(new java.awt.Color(204, 204, 0));
@@ -445,7 +473,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         botonConocerResultado.setFont(new java.awt.Font("MV Boli", 0, 18)); // NOI18N
         botonConocerResultado.setText("Conocer resultado");
-        marcoMostrarTabla.add(botonConocerResultado, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 470, 210, 70));
+        botonConocerResultado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonConocerResultadoActionPerformed(evt);
+            }
+        });
+        marcoMostrarTabla.add(botonConocerResultado, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 610, 210, 70));
 
         javax.swing.GroupLayout ventanaMostrarTablaLayout = new javax.swing.GroupLayout(ventanaMostrarTabla.getContentPane());
         ventanaMostrarTabla.getContentPane().setLayout(ventanaMostrarTablaLayout);
@@ -630,7 +663,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         data = new Object[partida.getRondas()][listaJugadores.length] ;
         
-            for (ronda = 0; ronda < partida.getRondas(); ronda++) {
+        for (ronda = 0; ronda < partida.getRondas(); ronda++) {
             
             sumarPuntos() ;
             
@@ -644,7 +677,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             
             if ((ronda + 1) != partida.getRondas())
             {
-                Utilidades.mostrarMensajeGUI("Dadle a OK cuando estéis listos para continuar.") ;
+                Utilidades.mostrarMensajeGUI("---------------- COMIENZA LA RONDA " + (ronda + 2) + " ----------------" + "\n\nDadle a OK cuando estéis listos \npara introducir los puntos de la ronda.") ;
             }
             
         }
@@ -657,6 +690,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_botonContinuarListaJugadoresInicialActionPerformed
+
+    private void botonConocerResultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonConocerResultadoActionPerformed
+        
+        data2 = new Object[1][listaJugadores.length] ;
+        
+        jlabelIndicadorRondas.setText("PUNTOS TOTALES") ;
+        
+        tablaPuntuaciones.setModel(actualizarModeloTabla(data2)) ;
+    }//GEN-LAST:event_botonConocerResultadoActionPerformed
 
     /**
      * @param args the command line arguments
