@@ -517,24 +517,38 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         return modeloTabla ;
     }
      
-     
-    private static String establecerGanador(){
+    
+      private static String establecerGanador(){
          
          int ganador = 0 ;
          String nombreGanador ;
+         
+         StringBuilder nombresGanadores = new StringBuilder() ;
+         ArrayList<Jugador> ganadores = new ArrayList<>() ;
          
          for (int i = 0; i < listaJugadores.length; i++) {
              
              if (listaJugadores[i].getPuntosTotales() < listaJugadores[ganador].getPuntosTotales()) {
                  
+                 ganadores.clear() ;
+                 ganadores.add(listaJugadores[i]) ;
                  ganador = i ;
+             }
+             else if (listaJugadores[i].getPuntosTotales() == listaJugadores[ganador].getPuntosTotales()) {
+                 
+                 ganadores.add(listaJugadores[i]) ;
              }
              
              listaJugadores[i].setPartidasJugadas() ;
          }
          
-         listaJugadores[ganador].setPartidasGanadas() ;
-         nombreGanador = listaJugadores[ganador].getNombre() ;
+          for (Jugador listaGanadores : ganadores) {
+              
+              nombresGanadores.append("\n" + listaGanadores.getNombre()) ;
+              listaGanadores.setPartidasGanadas() ;
+          }
+          
+          nombreGanador = nombresGanadores.toString() ;
          
          return nombreGanador ;
      }
@@ -1571,7 +1585,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         tablaPuntuaciones.setModel(actualizarModeloTabla(data2)) ;
         
-        Utilidades.mostrarMensajeGUI("El ganador es:\n" + establecerGanador());
+        Utilidades.mostrarMensajeGUI("El primer puesto es para:\n" + establecerGanador()) ;
         
         for (int i = 0; i < listaJugadores.length; i++) {
             
