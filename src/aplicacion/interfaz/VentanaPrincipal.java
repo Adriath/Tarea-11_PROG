@@ -1041,7 +1041,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
      
      
-    // ----------- CONTROL DE EVENTOS ----------------
+    // -------------------------- CONTROL DE EVENTOS -------------------------------------
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -1084,7 +1085,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jlabelIndicadorRondas = new javax.swing.JLabel();
         botonConocerResultado = new javax.swing.JButton();
         botonVolverTabla = new javax.swing.JButton();
-        jPanelBotonesOrdenarYBuscar = new javax.swing.JPanel();
+        jPanelFondoMostrarTabla = new javax.swing.JPanel();
         botonOrdenarPorPuntos = new javax.swing.JButton();
         botonOrdenarPorPJugadas = new javax.swing.JButton();
         botonOrdenarPorPGanadas = new javax.swing.JButton();
@@ -1093,6 +1094,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         botonVaciarBD = new javax.swing.JButton();
         botonEliminar = new javax.swing.JButton();
         botonModificar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         menuPrincipal = new javax.swing.JPanel();
         botonNuevaPartida1 = new javax.swing.JButton();
         botonRanking = new javax.swing.JButton();
@@ -1313,14 +1315,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         ventanaMostrarTabla.setTitle("Puntuaciones");
         ventanaMostrarTabla.setVisible(false);
 
+        marcoMostrarTabla.setBackground(new java.awt.Color(255, 255, 255));
         marcoMostrarTabla.setForeground(new java.awt.Color(204, 204, 204));
         marcoMostrarTabla.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         labelImagenTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplicacion/interfaz/imagenes/Tuki_titulo.jpg"))); // NOI18N
         marcoMostrarTabla.add(labelImagenTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 800, 260));
 
-        tablaPuntuaciones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102)));
-        tablaPuntuaciones.setFont(new java.awt.Font("MV Boli", 0, 18)); // NOI18N
+        jScrollPane3.setBackground(new java.awt.Color(255, 102, 102));
+
+        tablaPuntuaciones.setBackground(new java.awt.Color(102, 204, 255));
+        tablaPuntuaciones.setFont(new java.awt.Font("MV Boli", 0, 16)); // NOI18N
+        tablaPuntuaciones.setForeground(new java.awt.Color(0, 0, 0));
         tablaPuntuaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -1340,6 +1346,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tablaPuntuaciones.setAlignmentX(2.0F);
+        tablaPuntuaciones.setAlignmentY(2.0F);
+        tablaPuntuaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tablaPuntuaciones.setGridColor(new java.awt.Color(255, 102, 102));
+        tablaPuntuaciones.setRowSelectionAllowed(false);
         jScrollPane3.setViewportView(tablaPuntuaciones);
         if (tablaPuntuaciones.getColumnModel().getColumnCount() > 0) {
             tablaPuntuaciones.getColumnModel().getColumn(0).setResizable(false);
@@ -1350,13 +1361,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         marcoMostrarTabla.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 370, -1, 190));
 
-        jlabelIndicadorRondas.setFont(new java.awt.Font("MV Boli", 0, 24)); // NOI18N
-        jlabelIndicadorRondas.setForeground(new java.awt.Color(0, 0, 0));
+        jlabelIndicadorRondas.setBackground(new java.awt.Color(51, 51, 51));
+        jlabelIndicadorRondas.setFont(new java.awt.Font("MV Boli", 1, 32)); // NOI18N
+        jlabelIndicadorRondas.setForeground(new java.awt.Color(255, 255, 255));
         jlabelIndicadorRondas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         marcoMostrarTabla.add(jlabelIndicadorRondas, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 290, 400, 60));
 
-        botonConocerResultado.setFont(new java.awt.Font("MV Boli", 0, 18)); // NOI18N
+        botonConocerResultado.setFont(new java.awt.Font("MV Boli", 1, 18)); // NOI18N
+        botonConocerResultado.setForeground(new java.awt.Color(255, 255, 255));
         botonConocerResultado.setText("Conocer resultado");
+        botonConocerResultado.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 4, true));
+        botonConocerResultado.setContentAreaFilled(false);
+        botonConocerResultado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonConocerResultado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonConocerResultadoActionPerformed(evt);
@@ -1364,7 +1380,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         marcoMostrarTabla.add(botonConocerResultado, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 610, 210, 70));
 
+        botonVolverTabla.setBackground(new java.awt.Color(204, 51, 0));
+        botonVolverTabla.setFont(new java.awt.Font("MV Boli", 1, 20)); // NOI18N
+        botonVolverTabla.setForeground(new java.awt.Color(255, 255, 255));
         botonVolverTabla.setText("VOLVER");
+        botonVolverTabla.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 4, true));
+        botonVolverTabla.setContentAreaFilled(false);
+        botonVolverTabla.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonVolverTabla.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonVolverTablaActionPerformed(evt);
@@ -1372,82 +1394,117 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         marcoMostrarTabla.add(botonVolverTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 610, 210, 70));
 
+        jPanelFondoMostrarTabla.setOpaque(false);
+
+        botonOrdenarPorPuntos.setBackground(new java.awt.Color(255, 204, 0));
+        botonOrdenarPorPuntos.setFont(new java.awt.Font("MV Boli", 0, 16)); // NOI18N
+        botonOrdenarPorPuntos.setForeground(new java.awt.Color(0, 0, 0));
         botonOrdenarPorPuntos.setText("Ordenar por PUNTOS");
+        botonOrdenarPorPuntos.setBorder(null);
+        botonOrdenarPorPuntos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonOrdenarPorPuntos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonOrdenarPorPuntosActionPerformed(evt);
             }
         });
 
+        botonOrdenarPorPJugadas.setBackground(new java.awt.Color(255, 204, 0));
+        botonOrdenarPorPJugadas.setFont(new java.awt.Font("MV Boli", 0, 16)); // NOI18N
+        botonOrdenarPorPJugadas.setForeground(new java.awt.Color(0, 0, 0));
         botonOrdenarPorPJugadas.setText("Ordenar por PARTIDAS JUGADAS");
+        botonOrdenarPorPJugadas.setBorder(null);
+        botonOrdenarPorPJugadas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonOrdenarPorPJugadas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonOrdenarPorPJugadasActionPerformed(evt);
             }
         });
 
+        botonOrdenarPorPGanadas.setBackground(new java.awt.Color(255, 204, 0));
+        botonOrdenarPorPGanadas.setFont(new java.awt.Font("MV Boli", 0, 16)); // NOI18N
+        botonOrdenarPorPGanadas.setForeground(new java.awt.Color(0, 0, 0));
         botonOrdenarPorPGanadas.setText("Ordenar por PARTIDAS GANADAS");
+        botonOrdenarPorPGanadas.setBorder(null);
+        botonOrdenarPorPGanadas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonOrdenarPorPGanadas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonOrdenarPorPGanadasActionPerformed(evt);
             }
         });
 
+        botonBuscarPorNombre.setBackground(new java.awt.Color(255, 204, 0));
+        botonBuscarPorNombre.setFont(new java.awt.Font("MV Boli", 0, 16)); // NOI18N
+        botonBuscarPorNombre.setForeground(new java.awt.Color(0, 0, 0));
         botonBuscarPorNombre.setText("Buscar por NOMBRE");
+        botonBuscarPorNombre.setBorder(null);
+        botonBuscarPorNombre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonBuscarPorNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonBuscarPorNombreActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanelBotonesOrdenarYBuscarLayout = new javax.swing.GroupLayout(jPanelBotonesOrdenarYBuscar);
-        jPanelBotonesOrdenarYBuscar.setLayout(jPanelBotonesOrdenarYBuscarLayout);
-        jPanelBotonesOrdenarYBuscarLayout.setHorizontalGroup(
-            jPanelBotonesOrdenarYBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-            .addGroup(jPanelBotonesOrdenarYBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelBotonesOrdenarYBuscarLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addGroup(jPanelBotonesOrdenarYBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(botonOrdenarPorPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(botonOrdenarPorPJugadas, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(botonOrdenarPorPGanadas, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(botonBuscarPorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(0, 0, Short.MAX_VALUE)))
+        javax.swing.GroupLayout jPanelFondoMostrarTablaLayout = new javax.swing.GroupLayout(jPanelFondoMostrarTabla);
+        jPanelFondoMostrarTabla.setLayout(jPanelFondoMostrarTablaLayout);
+        jPanelFondoMostrarTablaLayout.setHorizontalGroup(
+            jPanelFondoMostrarTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFondoMostrarTablaLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelFondoMostrarTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(botonOrdenarPorPGanadas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+                    .addComponent(botonOrdenarPorPJugadas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botonOrdenarPorPuntos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(botonBuscarPorNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(15, 15, 15))
         );
-        jPanelBotonesOrdenarYBuscarLayout.setVerticalGroup(
-            jPanelBotonesOrdenarYBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
-            .addGroup(jPanelBotonesOrdenarYBuscarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelBotonesOrdenarYBuscarLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(botonOrdenarPorPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(20, 20, 20)
-                    .addComponent(botonOrdenarPorPJugadas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(20, 20, 20)
-                    .addComponent(botonOrdenarPorPGanadas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(20, 20, 20)
-                    .addComponent(botonBuscarPorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+        jPanelFondoMostrarTablaLayout.setVerticalGroup(
+            jPanelFondoMostrarTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFondoMostrarTablaLayout.createSequentialGroup()
+                .addContainerGap(76, Short.MAX_VALUE)
+                .addComponent(botonOrdenarPorPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonOrdenarPorPJugadas, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonOrdenarPorPGanadas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botonBuscarPorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(101, 101, 101))
         );
 
-        marcoMostrarTabla.add(jPanelBotonesOrdenarYBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 290, 300, 380));
+        marcoMostrarTabla.add(jPanelFondoMostrarTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 290, 300, 380));
 
+        jPanelBotonesEliminar.setOpaque(false);
+
+        botonVaciarBD.setBackground(new java.awt.Color(255, 204, 0));
+        botonVaciarBD.setFont(new java.awt.Font("MV Boli", 0, 16)); // NOI18N
+        botonVaciarBD.setForeground(new java.awt.Color(0, 0, 0));
         botonVaciarBD.setText("ELIMINAR TODO");
+        botonVaciarBD.setBorder(null);
+        botonVaciarBD.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonVaciarBD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonVaciarBDActionPerformed(evt);
             }
         });
 
+        botonEliminar.setBackground(new java.awt.Color(255, 204, 0));
+        botonEliminar.setFont(new java.awt.Font("MV Boli", 0, 16)); // NOI18N
+        botonEliminar.setForeground(new java.awt.Color(0, 0, 0));
         botonEliminar.setText("ELIMINAR jugador/a");
+        botonEliminar.setBorder(null);
+        botonEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonEliminarActionPerformed(evt);
             }
         });
 
+        botonModificar.setBackground(new java.awt.Color(255, 204, 0));
+        botonModificar.setFont(new java.awt.Font("MV Boli", 0, 16)); // NOI18N
+        botonModificar.setForeground(new java.awt.Color(0, 0, 0));
         botonModificar.setText("MODIFICAR jugador/a");
+        botonModificar.setBorder(null);
+        botonModificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botonModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonModificarActionPerformed(evt);
@@ -1459,30 +1516,46 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jPanelBotonesEliminarLayout.setHorizontalGroup(
             jPanelBotonesEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBotonesEliminarLayout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
                 .addGroup(jPanelBotonesEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesEliminarLayout.createSequentialGroup()
-                        .addComponent(botonVaciarBD, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesEliminarLayout.createSequentialGroup()
-                        .addGroup(jPanelBotonesEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(botonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(botonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(36, 36, 36))))
+                    .addGroup(jPanelBotonesEliminarLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(botonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelBotonesEliminarLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(botonVaciarBD, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelBotonesEliminarLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(botonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanelBotonesEliminarLayout.setVerticalGroup(
             jPanelBotonesEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBotonesEliminarLayout.createSequentialGroup()
                 .addContainerGap(32, Short.MAX_VALUE)
                 .addComponent(botonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botonVaciarBD, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18))
+                .addGap(42, 42, 42))
         );
 
         marcoMostrarTabla.add(jPanelBotonesEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 240, 270));
+
+        jPanel1.setBackground(new java.awt.Color(0, 153, 204));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1090, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 470, Short.MAX_VALUE)
+        );
+
+        marcoMostrarTabla.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 1090, 470));
 
         javax.swing.GroupLayout ventanaMostrarTablaLayout = new javax.swing.GroupLayout(ventanaMostrarTabla.getContentPane());
         ventanaMostrarTabla.getContentPane().setLayout(ventanaMostrarTablaLayout);
@@ -1490,12 +1563,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             ventanaMostrarTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ventanaMostrarTablaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(marcoMostrarTabla, javax.swing.GroupLayout.DEFAULT_SIZE, 1056, Short.MAX_VALUE)
+                .addComponent(marcoMostrarTabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         ventanaMostrarTablaLayout.setVerticalGroup(
             ventanaMostrarTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(marcoMostrarTabla, javax.swing.GroupLayout.DEFAULT_SIZE, 744, Short.MAX_VALUE)
+            .addComponent(marcoMostrarTabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         marcoPrincipal.add(ventanaMostrarTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 1080, 780));
@@ -1588,8 +1661,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_fondoPantallaMouseClicked
 
     private void botonNuevaPartida1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonNuevaPartida1ActionPerformed
-        ventanaNuevaPartida.setVisible(true) ;
         
+        ventanaNuevaPartida.setVisible(true) ;
         ronda = 0 ;
     }//GEN-LAST:event_botonNuevaPartida1ActionPerformed
 
@@ -1601,7 +1674,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         jPanelBotonesEliminar.setVisible(true) ;
         
-        jPanelBotonesOrdenarYBuscar.setVisible(true) ;
+        jPanelFondoMostrarTabla.setVisible(true) ;
         
         jlabelIndicadorRondas.setText("RANKING") ;
         
@@ -1682,7 +1755,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         jPanelBotonesEliminar.setVisible(false) ;
         
-        jPanelBotonesOrdenarYBuscar.setVisible(false) ;
+        jPanelFondoMostrarTabla.setVisible(false) ;
         
         // Suma los puntos en cada ronda y los muestra en la tabla
         
@@ -1850,8 +1923,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botonVolverTabla;
     private javax.swing.JTextField cajaTextoNumeroJugadores1;
     private javax.swing.JLabel fondoPantalla;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelBotonesEliminar;
-    private javax.swing.JPanel jPanelBotonesOrdenarYBuscar;
+    private javax.swing.JPanel jPanelFondoMostrarTabla;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
