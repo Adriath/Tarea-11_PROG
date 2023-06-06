@@ -27,16 +27,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     // ----------- DECLARACIÓN DE VARIABLES --------------
     
-    private byte numeroRondas ;
-    private byte numeroJugadores ;
+    private byte numeroRondas ; // Número de rondas de la partida
+    private byte numeroJugadores ; // Número de jugadores de la partida
     
-    private static int ronda = 0;
+    private static int ronda = 0 ; // Sirve para indicar la ronda actual
     
-    private static Jugador[] listaJugadores ;
+    private static Jugador[] listaJugadores ; // Lista donde se almacenan los jugaodores para operar con los datos
     
-    private static Object[][] data ;
-    private static Object[][] data2 ;
-    private static Object[][] dataRanking ;
+    private static Object[][] data ; // Array pensado para el modelo de tabla durante la ejecución de la partida
+    private static Object[][] data2 ; // Nuevo array porque se requiere vacío
+    private static Object[][] dataRanking ; // Array pensado para el modelo de la tabla en la sección de ranking
     
     private static Partida partida ;
     
@@ -49,6 +49,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     public VentanaPrincipal() {
         initComponents();
         
+        // Configuración del icono del programa
         setIconImage (new ImageIcon(getClass().getResource("/aplicacion/interfaz/imagenes/Tuki sobre fondo negro_editado.png")).getImage()) ;
     }
 
@@ -57,20 +58,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // -------------- MÉTODOS PERSONALIZADOS -----------------
     
     
+    /**
+     * Método que añade jugadores a la partida.
+     * 
+     * @param numeroJugadores Número de jugadores que integrarán la partida
+     */
     private static void aniadirJugadores(byte numeroJugadores){
         
         boolean validador = false ;
         
+        listaJugadores = new Jugador[numeroJugadores] ; // La longitud del array dependerá del número de jugadores
         
-        listaJugadores = new Jugador[numeroJugadores] ;
         
         for (int i = 0; i < listaJugadores.length; i++) {
             
             do 
             {
+                // Pedimos el nombre de los/las jugadores/as
                 String nombre = Utilidades.leerCadenaGUI("Introduce el nombre del jugador/a " + (i + 1)) ;
                 validador = false ;
                 
+                // Almacenamos los nombres en el array para usarlo durante la partida
                 try
                 {
                     listaJugadores[i] = new Jugador(nombre) ;
@@ -96,8 +104,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
     
     
+    /**
+     * Método que muestra la lista de jugadores de la partida.
+     * Se usa en el preludio a la partida para aparecer en un área de texto.
+     * 
+     * @return La lista de jugadores de la partida
+     */
     private static String muestraListaJugadores(){
-        // LISTA DE JUGADORES EN LA PANTALLA INICIAL
+        
         
         StringBuilder sb = new StringBuilder() ;
         
@@ -111,6 +125,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
     
     
+    /**
+     * Método que suma los puntos de la ronda.
+     */
     private static void sumarPuntos(){
         
         int puntos ; 
@@ -125,6 +142,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
     
     
+    /**
+     * Método que sirve para actualizar el modelo de la tabla.
+     * 
+     * @param ronda Ronda actual
+     * @param data Datos de la tabla
+     * 
+     * @return Devuelve el modelo de la tabla
+     */
     private static DefaultTableModel actualizarModeloTabla(int ronda, Object[][] data){
         
          // CREACIÓN DEL MODELO PARA LA TABLA
@@ -152,6 +177,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
     
     
+    /**
+     * Método que sirve para actualizar el modelo de la tabla.
+     * 
+     * @param data Datos de la tabla
+     * @return Devuelve el modelo de la tabla
+     */
     private static DefaultTableModel actualizarModeloTabla(Object[][] data){
         
         
@@ -180,7 +211,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
     
     
-     private static DefaultTableModel actualizarModeloTablaRanking(Object[][] data){
+     
+    /**
+     * Método que sirve para actualizar el modelo de la tabla en la sección de ranking.
+     * 
+     * @param data Datos de la tabla
+     * @return Devuelve el modelo de la tabla
+     */
+    private static DefaultTableModel actualizarModeloTablaRanking(Object[][] data){
         
         ArrayList<Jugador> listaBDRanking = new ArrayList<>() ;
                   
@@ -212,7 +250,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 listaBDRanking.add(new Jugador(nombre, puntos, partidasJugadas, partidasGanadas)) ;
             }
              
+            // Cerramos las conexiones
+            
             conexion.desconectar() ;
+            conn.close() ;
+            leer.close() ;
+            rs.close() ;
         }
         catch(Exception e){
             System.out.println("NO SE PUDO LISTAR.\n" + e.getMessage()) ;
@@ -246,7 +289,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
      
      
-     private static DefaultTableModel actualizarModeloTablaRankingPorPuntos(Object[][] data){
+    /**
+     * Método que sirve para actualizar los datos de la tabla ordenados por puntos.
+     * 
+     * @param data Datos de la tabla
+     * @return Devuelve el modelo de la tabla
+     */ 
+    private static DefaultTableModel actualizarModeloTablaRankingPorPuntos(Object[][] data){
         
         ArrayList<Jugador> listaBDRanking = new ArrayList<>() ;
                   
@@ -262,6 +311,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             Connection conn = conexion.getConn() ;
             
             Statement leer = conn.createStatement() ;
+            
+            //Hacemos la consulta ordenada por puntos en sentido ascendente
             ResultSet rs = leer.executeQuery("SELECT * FROM JUGADORES ORDER BY PUNTOS ASC") ;
             
             while (rs.next())
@@ -278,7 +329,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 listaBDRanking.add(new Jugador(nombre, puntos, partidasJugadas, partidasGanadas)) ;
             }
              
+            // Cerramos las conexiones
+            
             conexion.desconectar() ;
+            conn.close() ;
+            leer.close() ;
+            rs.close() ;
         }
         catch(Exception e){
             System.out.println("NO SE PUDO LISTAR.\n" + e.getMessage()) ;
@@ -312,6 +368,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
      
      
+    
+    /**
+     * Métdo que sirve para actualizar la tabla ordenada por partidas jugadas.
+     * 
+     * @param data Datos de la tabla
+     * @return Modelo de la tabla
+     */
     private static DefaultTableModel actualizarModeloTablaRankingPorPartidasJugadas(Object[][] data){
         
         ArrayList<Jugador> listaBDRanking = new ArrayList<>() ;
@@ -328,6 +391,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             Connection conn = conexion.getConn() ;
             
             Statement leer = conn.createStatement() ;
+            
+            // Hacemos la consulta ordenada por partidas jugadas en sentido descendente
             ResultSet rs = leer.executeQuery("SELECT * FROM JUGADORES ORDER BY PARTIDASJUGADAS DESC") ;
             
             while (rs.next())
@@ -344,7 +409,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 listaBDRanking.add(new Jugador(nombre, puntos, partidasJugadas, partidasGanadas)) ;
             }
              
+            // Cerramos las conexiones
+            
             conexion.desconectar() ;
+            conn.close() ;
+            leer.close() ;
+            rs.close() ;
         }
         catch(Exception e){
             System.out.println("NO SE PUDO LISTAR.\n" + e.getMessage()) ;
@@ -378,6 +448,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
     
     
+    
+    /**
+     * Método que sirve para actualizar la tabla ordenada por partidas ganadas
+     * 
+     * @param data Datos de la tabla
+     * @return Devuelve el modelo de la tabla
+     */
     private static DefaultTableModel actualizarModeloTablaRankingPorPartidasGanadas(Object[][] data){
         
         ArrayList<Jugador> listaBDRanking = new ArrayList<>() ;
@@ -394,6 +471,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             Connection conn = conexion.getConn() ;
             
             Statement leer = conn.createStatement() ;
+            
+            // Hacemos la consulta ordenada por partidas ganadas en sentido descendente
             ResultSet rs = leer.executeQuery("SELECT * FROM JUGADORES ORDER BY PARTIDASGANADAS DESC") ;
             
             while (rs.next())
@@ -410,7 +489,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 listaBDRanking.add(new Jugador(nombre, puntos, partidasJugadas, partidasGanadas)) ;
             }
              
+             // Cerramos las conexiones
+            
             conexion.desconectar() ;
+            conn.close() ;
+            leer.close() ;
+            rs.close() ;
         }
         catch(Exception e){
             System.out.println("NO SE PUDO LISTAR.\n" + e.getMessage()) ;
@@ -518,7 +602,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
      
     
-      private static String establecerGanador(){
+      
+    /**
+     * Método que sirve para establecer quién gana la partida, pudiendo haber 
+     * empate y compartiendo así el primer puesto.
+     * 
+     * @return La lista de ganadores
+     */
+    private static String establecerGanador(){
          
          int ganador = 0 ;
          String nombreGanador ;
@@ -529,12 +620,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
          for (int i = 0; i < listaJugadores.length; i++) {
              
              if (listaJugadores[i].getPuntosTotales() < listaJugadores[ganador].getPuntosTotales()) {
+                 /* Compara los puntos de un jugador y guarda la posición del que tenga menos puntos en la variable ganador.
+                    Si el jugador comparado tiene menos puntos que el anterior ocupará su lugar como ganador.
+                    Para ello...
+                 */
                  
-                 ganadores.clear() ;
-                 ganadores.add(listaJugadores[i]) ;
-                 ganador = i ;
+                 ganadores.clear() ; // ...limpia la lista...
+                 ganadores.add(listaJugadores[i]) ; // ...y almacena al jugador
+                 ganador = i ; // La variable se actualiza para que el ganador ocupe la posición de referencia
              }
              else if (listaJugadores[i].getPuntosTotales() == listaJugadores[ganador].getPuntosTotales()) {
+                 // En caso de ser iguales, en vez de sustituir se añadirá sumándose a la lista de ganadores
                  
                  ganadores.add(listaJugadores[i]) ;
              }
@@ -543,6 +639,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
          }
          
           for (Jugador listaGanadores : ganadores) {
+              // Recorremos la lista y extraemos los nombres de los ganadores
               
               nombresGanadores.append("\n" + listaGanadores.getNombre()) ;
               listaGanadores.setPartidasGanadas() ;
@@ -583,7 +680,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
                 Utilidades.mostrarMensajeGUI("BASE DE DATOS VACÍA.") ; // Avisa con un mensaje
                 
+                // Cerramos las conexiones
+            
                 conexion.desconectar() ;
+                conn.close() ;
+                leer.close() ;
             }
             else
                 // Si la respuesta es no o no se contesta...
@@ -598,6 +699,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
     
     
+    /**
+     * Método que comprueba si el jugador ya existe en la base de datos.
+     * 
+     * @param posicion Posición en la lista de jugadores
+     * @return Devuelve true si existe, false si no
+     */
     private static boolean compruebaSiExiste(int posicion){
         
         String nombreBD ;
@@ -640,6 +747,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
     
     
+    /**
+     * Método que sirve para añadir un registro a la base de datos.
+     * Cuando no existe lo crea, cuando existe lo modifica.
+     */
     private static void aniadirRegistroBD(){
         
         boolean encontrado = false ;
@@ -739,6 +850,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
     
     
+    /**
+     * Método que modifica el nombre del jugador en la base de datos.
+     * 
+     * @param nombreBusqueda  Nombre del jugador que queremos modificar.
+     */
     private static void modificarNombreJugador(String nombreBusqueda){
         
         boolean validador = false ;
@@ -757,6 +873,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             Connection conn = conexion.getConn() ;
             
             Statement leer = conn.createStatement() ;
+            
+            // Buscamos el nombre del jugador en la base de datos para comprobar si existe
             ResultSet rs = leer.executeQuery("SELECT * FROM JUGADORES WHERE NOMBRE = '" + nombreBusqueda + "'") ;
             
             while (rs.next())
@@ -774,14 +892,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
             
             if (listaBDRanking.isEmpty()) 
+                // Si no hubo coincidencia no se debió guardar nada en la lista, por lo que si está vacía el jugador no existe
             {
                 Utilidades.mostrarMensajeGUI("El nombre \n" + nombreBusqueda + " \nNO EXISTE.") ;
             }
             else
             {   
+                // En caso de que sí exista
                 do {
                     
+                    //Pedimos el nombre que queremos ponerle al jugador
                     String nombreModificado = Utilidades.leerCadenaGUI("Introduce el nuevo nombre") ;
+                    
+                    // Vamos a consultar si el nombre que queremos poner ya existe
                     
                     rs = leer.executeQuery("SELECT * FROM JUGADORES WHERE NOMBRE = '" + nombreModificado + "'") ;
             
@@ -800,10 +923,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                     }
 
                     if (listaBDRanking.isEmpty())  
+                        // Si existe 
                     {
                         Utilidades.mostrarMensajeGUI("El nombre \n" + nombreModificado + " \nYA EXISTE.\n Selecciona otro.") ;
                     }
                     else
+                        // Si no existe, es decir, si el nombre está libre lo utilizaremos para la modificación
                     {
                         String SQLq = "UPDATE JUGADORES SET NOMBRE = '" + nombreModificado + "' WHERE NOMBRE = '" + nombreBusqueda + "'" ;
                         
@@ -834,7 +959,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     
     
     
-     private static void eliminarJugador(String nombreBusqueda){
+     /**
+      * Método que eliminar un jugador de la base de datos
+      * 
+      * @param nombreBusqueda Nombre del jugador/a que se quiere eliminar
+      */
+    private static void eliminarJugador(String nombreBusqueda){
         
         boolean validador = false ;
         
@@ -852,6 +982,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             Connection conn = conexion.getConn() ;
             
             Statement leer = conn.createStatement() ;
+            
+            // Realiza la consulta para comprobar si existe
             ResultSet rs = leer.executeQuery("SELECT * FROM JUGADORES WHERE NOMBRE = '" + nombreBusqueda + "'") ;
             
             while (rs.next())
@@ -869,10 +1001,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
             
             if (listaBDRanking.isEmpty()) 
+                // Si no existe
             {
                 Utilidades.mostrarMensajeGUI("El nombre \n" + nombreBusqueda + " \nNO EXISTE.") ;
             }
             else
+                // Si existe
             {   
                 String mensaje = "¿Desea eliminar a " + nombreBusqueda + "?\n " ;
 
@@ -1540,6 +1674,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void botonContinuarListaJugadoresInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonContinuarListaJugadoresInicialActionPerformed
         
+        // Esconde los botones propios de la sección de ranking
+        
         botonVolverTabla.setVisible(false) ;
         
         botonConocerResultado.setVisible(false) ;
@@ -1547,6 +1683,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jPanelBotonesEliminar.setVisible(false) ;
         
         jPanelBotonesOrdenarYBuscar.setVisible(false) ;
+        
+        // Suma los puntos en cada ronda y los muestra en la tabla
         
         data = new Object[partida.getRondas()][listaJugadores.length] ;
         
@@ -1569,6 +1707,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             
         }
         
+        // Cuando ha llegado al final muestra el botón para obtener la lista de ganadores
+        
         botonConocerResultado.setVisible(true) ;
         
     }//GEN-LAST:event_botonContinuarListaJugadoresInicialActionPerformed
@@ -1577,15 +1717,22 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         data2 = new Object[1][listaJugadores.length] ;
         
+        // Cambiar el botón de obtener resultado por el de volver
+        
         botonConocerResultado.setVisible(false) ;
         
         botonVolverTabla.setVisible(true) ;
         
+        // Actualiza el encabezado de la tabla
         jlabelIndicadorRondas.setText("PUNTOS TOTALES") ;
         
+        // Actualiza los datos de la tabla con los puntos totales
         tablaPuntuaciones.setModel(actualizarModeloTabla(data2)) ;
         
+        // Muestra un mensaje con la lista de ganadores
         Utilidades.mostrarMensajeGUI("El primer puesto es para:\n" + establecerGanador()) ;
+        
+        // Mensajes por consola para el desarrollador
         
         for (int i = 0; i < listaJugadores.length; i++) {
             
@@ -1596,6 +1743,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             System.out.println("------------------------------------------------------");
         }
         
+        // Añade el resgistro a la base de datos
         aniadirRegistroBD() ;
     }//GEN-LAST:event_botonConocerResultadoActionPerformed
 
@@ -1607,6 +1755,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void botonVaciarBDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonVaciarBDActionPerformed
         
         vaciarBD() ;
+        
+        tablaPuntuaciones.setModel(actualizarModeloTablaRanking(dataRanking)) ;
     }//GEN-LAST:event_botonVaciarBDActionPerformed
 
     private void botonOrdenarPorPuntosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonOrdenarPorPuntosActionPerformed

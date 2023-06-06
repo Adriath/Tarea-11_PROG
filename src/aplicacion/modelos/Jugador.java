@@ -44,10 +44,10 @@ public class Jugador {
      */
     private int partidasGanadas ;
     
-    /**
-     * Indica si ha ganado la partida.
-     */
-    private boolean esGanador ;
+//    /**
+//     * Indica si ha ganado la partida.
+//     */
+//    private boolean esGanador ;
     
     
     // ------------------- DECLARAICÓN DE MÉTODOS -------------------
@@ -55,6 +55,10 @@ public class Jugador {
     
         // ----- CONSTRUCTOR POR DEFECTO -------
     
+        
+        /**
+         * Constructor por defecto de la clase Jugador.
+         */
         public Jugador() {
             
             this.nombre = "" ;
@@ -62,11 +66,20 @@ public class Jugador {
             this.puntosTotales = 0 ;
             this.partidasJugadas = 0 ;
             this.partidasGanadas = 0 ;
-            this.esGanador = false ;
+//            this.esGanador = false ;
         }
     
-        // ---- CONSTRUCTOR CON PARÁMETROS -----
+        // ---- CONSTRUCTORES CON PARÁMETROS -----
     
+        
+        /**
+         * Constructor con parámetros de la clase Jugador.
+         * Crea el/la jugador/a a partir del nombre. 
+         * Enfocado a la ejecución local de una partida.
+         * 
+         * @param nombre Nombre del jugador/a.
+         * @throws ExcepcionJugador 
+         */
         public Jugador(String nombre) throws ExcepcionJugador{
             
             this.setNombre(nombre) ;
@@ -74,17 +87,30 @@ public class Jugador {
             this.puntosTotales = 0 ;
             this.partidasJugadas = 0 ;
             this.partidasGanadas = 0 ;
-            this.esGanador = false ;
+//            this.esGanador = false ;
             
         }
 
+        
+        /**
+         * Constructor con parámetros de la clase Jugador.
+         * Es el que se utiliza para el ranking ya que se necesita un objeto 
+         * Jugador para almacenar los datos ya existentes.
+         * Enfocado a la comunicación con la base de datos.
+         * Los parámetros coinciden con la base de datos.
+         * 
+         * @param nombre Nombre del jugador/a
+         * @param puntosTotales Puntos totales
+         * @param partidasJugadas Total de partidas jugadas
+         * @param partidasGanadas Total de partidas ganadas
+         */
         public Jugador(String nombre, int puntosTotales, int partidasJugadas, int partidasGanadas) {
             this.nombre = nombre;
             puntosActuales = 0 ;
             this.puntosTotales = puntosTotales;
             this.partidasJugadas = partidasJugadas;
             this.partidasGanadas = partidasGanadas;
-            this.esGanador = false ;
+//            this.esGanador = false ;
         }
         
         
@@ -248,36 +274,42 @@ public class Jugador {
             
             
             
-            // ES GANADOR
-
-            
-            /**
-             * Método que devuelve si el/la jugador/a es ganador/a.
-             * 
-             * @return Si se ha ganado la partida. True gana, false pierde.
-             */
-            public boolean isEsGanador() {
-                
-                return esGanador;
-            }
-
-            
-            /**
-             * Método que modifica el estado del jugador/a entre perder y ganar.
-             * 
-             * @param esGanador Estado del jugador/a (ganar o perder).
-             */
-            public void setEsGanador(boolean esGanador) {
-                
-                this.esGanador = esGanador;
-            }
+//            // ES GANADOR
+//
+//            
+//            /**
+//             * Método que devuelve si el/la jugador/a es ganador/a.
+//             * 
+//             * @return Si se ha ganado la partida. True gana, false pierde.
+//             */
+//            public boolean isEsGanador() {
+//                
+//                return esGanador;
+//            }
+//
+//            
+//            /**
+//             * Método que modifica el estado del jugador/a entre perder y ganar.
+//             * 
+//             * @param esGanador Estado del jugador/a (ganar o perder).
+//             */
+//            public void setEsGanador(boolean esGanador) {
+//                
+//                this.esGanador = esGanador;
+//            }
 
             
         
         
         // -------- TO STRING ---------            
 
-        @Override
+        
+        /**
+         * Método toString() de la clase Jugador.
+         * 
+         * @return Devuelve los datos relevantes del jugador/a.
+         */
+            @Override
         public String toString() {
             
             StringBuilder sb = new StringBuilder();

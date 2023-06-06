@@ -41,6 +41,9 @@ public class Partida {
         // --- CONSTRUCTOR POR DEFECTO ---
 
         
+        /**
+         * Contructor por defecto de la clase Partida.
+         */
         public Partida() {
             
         this.rondas = 0 ;
@@ -51,6 +54,15 @@ public class Partida {
     
         // --- CONSTRUCTOR CON PARÁMETROS ---
         
+        
+        /**
+         * Constructor con parámetros de la clase Partida.
+         * 
+         * @param rondas Número de rondas de la partida
+         * @param numJugadores Número de jugadores
+         * @param listaJugadores Lista donde se almacenarán los datos de los jugadores
+         * @throws ExcepcionPartida 
+         */
         public Partida(byte rondas, byte numJugadores, Jugador[] listaJugadores) throws ExcepcionPartida{
             
             this.setRondas(rondas) ;
@@ -149,6 +161,7 @@ public class Partida {
              * Método que modifica la lista de jugadores de la partida.
              * 
              * @param listaJugadores Lista de jugadores.
+             * @throws aplicacion.modelos.excepciones.ExcepcionPartida
              */
             public void setListaJugadores(Jugador[] listaJugadores) throws ExcepcionPartida{
                 
@@ -187,73 +200,5 @@ public class Partida {
 
             return sb.toString();
         }
-    
-            
-        // ------------------ MÉTODOS PERSONALIZADOS ---------------------
-        
-//        public static void jugar(Jugador[] listaJugadores, int[] listaPuntos){
-//            
-//            for (int i = 0; i < listaJugadores.length; i++) {
-//                // Añade los puntos de la partida al jugador.
-//                
-//                listaJugadores[i].setPuntosActuales(listaPuntos[i]) ;
-//                
-//                // AQUÍ AHORA HABRÁ QUE CMPARAR LOS PUNTOS PARA VER QUIÉN GANA
-//            }
-//        }
-        
-        
-//        
-//        // --------------------------------------------------
-//        // -------------- MAIN DE PRUEBAS -------------------
-//        // --------------------------------------------------
-//        
-//            
-//        public static void main(String[] args) {
-//        
-//         Partida partida1 = null;
-//         
-//         Jugador listaJugadores[] = new Jugador[3]; 
-//         
-//         Jugador jugador1 = null ;
-//         Jugador jugador2 = null ;
-//         Jugador jugador3 = null ;
-//         
-//         try
-//         {
-//            jugador1 = new Jugador("Adrián") ;
-//            jugador2 = new Jugador("Sara") ;
-//            jugador3 = new Jugador("Margari") ;
-//         }
-//         catch(ExcepcionJugador e){
-//             
-//             System.out.println("Error jugador") ;
-//         }
-//         
-//         
-//         try
-//         {
-//             partida1 = new Partida((byte)2, (byte)3, listaJugadores) ;
-//         }
-//         catch(ExcepcionPartida e){
-//             System.out.println(e.getMessage()) ;
-//         }
-//         
-//        
-//         
-//         listaJugadores[0] = jugador1 ;
-//         listaJugadores[1] = jugador2 ;
-//         listaJugadores[2] = jugador3 ;
-//         
-//         jugador1.setPuntosActuales(50);
-//         jugador2.setPuntosActuales(30);
-//         jugador3.setPuntosActuales(-4);
-//         
-//            System.out.println(partida1.toString());
-//            for (int i = 0; i < listaJugadores.length; i++) 
-//            {
-//                System.out.println(listaJugadores[i].toString() );
-//            }
-//    }
             
 }
