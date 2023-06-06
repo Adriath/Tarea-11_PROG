@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import utilidades.Utilidades;
@@ -47,6 +48,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      */
     public VentanaPrincipal() {
         initComponents();
+        
+        setIconImage (new ImageIcon(getClass().getResource("/aplicacion/interfaz/imagenes/Tuki sobre fondo negro_editado.png")).getImage()) ;
     }
 
     
@@ -950,6 +953,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         fondoPantalla = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Tuki Tuki");
         setLocationByPlatform(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1338,7 +1342,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             ventanaMostrarTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ventanaMostrarTablaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(marcoMostrarTabla, javax.swing.GroupLayout.DEFAULT_SIZE, 1094, Short.MAX_VALUE)
+                .addComponent(marcoMostrarTabla, javax.swing.GroupLayout.DEFAULT_SIZE, 1056, Short.MAX_VALUE)
                 .addContainerGap())
         );
         ventanaMostrarTablaLayout.setVerticalGroup(
