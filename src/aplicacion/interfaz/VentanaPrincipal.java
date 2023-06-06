@@ -814,6 +814,80 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
         
     }
+    
+    
+    
+     private static void eliminarJugador(String nombreBusqueda){
+        
+        boolean validador = false ;
+        
+        ArrayList<Jugador> listaBDRanking = new ArrayList<>() ;
+                  
+        try
+        {
+            String nombre = "" ;
+            int puntos = 0 ;
+            int partidasJugadas = 0 ;
+            int partidasGanadas = 0 ;
+            
+            ConexionOracle conexion = new ConexionOracle() ;
+            
+            Connection conn = conexion.getConn() ;
+            
+            Statement leer = conn.createStatement() ;
+            ResultSet rs = leer.executeQuery("SELECT * FROM JUGADORES WHERE NOMBRE = '" + nombreBusqueda + "'") ;
+            
+            while (rs.next())
+            {
+                // Extraemos los valores de los atributos en Oracle y los guardamos en el proyecto en Java.
+                
+                nombre = rs.getString("NOMBRE") ;
+                puntos = rs.getInt("PUNTOS") ;
+                partidasJugadas = rs.getInt("PARTIDASJUGADAS") ;
+                partidasGanadas = rs.getInt("PARTIDASGANADAS") ;
+                
+                // Almacenamos el registro en el ArrayList.
+                
+                listaBDRanking.add(new Jugador(nombre, puntos, partidasJugadas, partidasGanadas)) ;
+            }
+            
+            if (listaBDRanking.isEmpty()) 
+            {
+                Utilidades.mostrarMensajeGUI("El nombre \n" + nombreBusqueda + " \nNO EXISTE.") ;
+            }
+            else
+            {   
+                String mensaje = "¿Desea eliminar a " + nombreBusqueda + "?\n " ;
+
+                // Secuencia de confirmación. Pide confirmación para borrar el registro
+
+                int respuesta = JOptionPane.showConfirmDialog(null, mensaje, "Confirmación", JOptionPane.YES_NO_OPTION) ;
+
+                if (respuesta == JOptionPane.YES_OPTION)
+                    // Si la respuesta es sí lo eliminará
+                {
+                    String consulta = "DELETE FROM JUGADORES WHERE NOMBRE = '" + nombreBusqueda + "'" ;
+
+                    leer.executeQuery(consulta) ;
+
+                    conexion.desconectar() ;
+                  
+                    mensaje = "JUGADOR/A \n" + nombreBusqueda + " \nELIMINADO/A" ;
+
+                    Utilidades.mostrarMensajeGUI(mensaje) ; // Cuadro de diálogo que confirma la elminación
+                }
+             
+                conexion.desconectar() ;
+                conn.close() ;
+                leer.close() ;
+                rs.close() ;
+            }
+        }
+         catch(Exception e){
+            System.out.println("NO SE PUDO LISTAR.\n" + e.getMessage()) ;
+        }
+        
+    }
      
      
     // ----------- CONTROL DE EVENTOS ----------------
@@ -1215,6 +1289,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
 
         botonEliminar.setText("ELIMINAR jugador/a");
+        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEliminarActionPerformed(evt);
+            }
+        });
 
         botonModificar.setText("MODIFICAR jugador/a");
         botonModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -1259,7 +1338,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             ventanaMostrarTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ventanaMostrarTablaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(marcoMostrarTabla, javax.swing.GroupLayout.DEFAULT_SIZE, 1056, Short.MAX_VALUE)
+                .addComponent(marcoMostrarTabla, javax.swing.GroupLayout.DEFAULT_SIZE, 1094, Short.MAX_VALUE)
                 .addContainerGap())
         );
         ventanaMostrarTablaLayout.setVerticalGroup(
@@ -1368,6 +1447,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         botonConocerResultado.setVisible(false) ;
         
+        jPanelBotonesEliminar.setVisible(true) ;
+        
+        jPanelBotonesOrdenarYBuscar.setVisible(true) ;
+        
         jlabelIndicadorRondas.setText("RANKING") ;
         
         tablaPuntuaciones.setModel(actualizarModeloTablaRanking(dataRanking)) ;
@@ -1442,6 +1525,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         botonVolverTabla.setVisible(false) ;
         
         botonConocerResultado.setVisible(false) ;
+        
+        jPanelBotonesEliminar.setVisible(false) ;
+        
+        jPanelBotonesOrdenarYBuscar.setVisible(false) ;
         
         data = new Object[partida.getRondas()][listaJugadores.length] ;
         
@@ -1534,6 +1621,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         tablaPuntuaciones.setModel(actualizarModeloTablaRanking(dataRanking)) ;
     }//GEN-LAST:event_botonModificarActionPerformed
+
+    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
+        
+        String nombreBusqueda = Utilidades.leerCadenaGUI("Introduce el nombre del jugador que quieres eliminar.") ;
+        
+        eliminarJugador(nombreBusqueda) ;
+        
+        tablaPuntuaciones.setModel(actualizarModeloTablaRanking(dataRanking)) ;
+    }//GEN-LAST:event_botonEliminarActionPerformed
 
     /**
      * @param args the command line arguments
