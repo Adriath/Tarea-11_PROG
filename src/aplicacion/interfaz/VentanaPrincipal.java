@@ -720,6 +720,100 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         }
     }
+    
+    
+    private static void modificarNombreJugador(String nombreBusqueda){
+        
+        boolean validador = false ;
+        
+        ArrayList<Jugador> listaBDRanking = new ArrayList<>() ;
+                  
+        try
+        {
+            String nombre = "" ;
+            int puntos = 0 ;
+            int partidasJugadas = 0 ;
+            int partidasGanadas = 0 ;
+            
+            ConexionOracle conexion = new ConexionOracle() ;
+            
+            Connection conn = conexion.getConn() ;
+            
+            Statement leer = conn.createStatement() ;
+            ResultSet rs = leer.executeQuery("SELECT * FROM JUGADORES WHERE NOMBRE = '" + nombreBusqueda + "'") ;
+            
+            while (rs.next())
+            {
+                // Extraemos los valores de los atributos en Oracle y los guardamos en el proyecto en Java.
+                
+                nombre = rs.getString("NOMBRE") ;
+                puntos = rs.getInt("PUNTOS") ;
+                partidasJugadas = rs.getInt("PARTIDASJUGADAS") ;
+                partidasGanadas = rs.getInt("PARTIDASGANADAS") ;
+                
+                // Almacenamos el registro en el ArrayList.
+                
+                listaBDRanking.add(new Jugador(nombre, puntos, partidasJugadas, partidasGanadas)) ;
+            }
+            
+            if (listaBDRanking.isEmpty()) 
+            {
+                Utilidades.mostrarMensajeGUI("El nombre \n" + nombreBusqueda + " \nNO EXISTE.") ;
+            }
+            else
+            {   
+                do {
+                    
+                    String nombreModificado = Utilidades.leerCadenaGUI("Introduce el nuevo nombre") ;
+                    
+                    rs = leer.executeQuery("SELECT * FROM JUGADORES WHERE NOMBRE = '" + nombreModificado + "'") ;
+            
+                    while (rs.next())
+                    {
+                        // Extraemos los valores de los atributos en Oracle y los guardamos en el proyecto en Java.
+
+                        nombre = rs.getString("NOMBRE") ;
+                        puntos = rs.getInt("PUNTOS") ;
+                        partidasJugadas = rs.getInt("PARTIDASJUGADAS") ;
+                        partidasGanadas = rs.getInt("PARTIDASGANADAS") ;
+
+                        // Almacenamos el registro en el ArrayList.
+
+                        listaBDRanking.add(new Jugador(nombre, puntos, partidasJugadas, partidasGanadas)) ;
+                    }
+
+                    if (listaBDRanking.isEmpty())  
+                    {
+                        Utilidades.mostrarMensajeGUI("El nombre \n" + nombreModificado + " \nYA EXISTE.\n Selecciona otro.") ;
+                    }
+                    else
+                    {
+                        String SQLq = "UPDATE JUGADORES SET NOMBRE = '" + nombreModificado + "' WHERE NOMBRE = '" + nombreBusqueda + "'" ;
+                        
+                        PreparedStatement ps = conn.prepareStatement(SQLq, Statement.RETURN_GENERATED_KEYS) ;
+
+                        ps.executeUpdate() ;
+                        
+                        Utilidades.mostrarMensajeGUI("Has modificador el nombre.\nDe --> " + nombreBusqueda + "\nA --> " + nombreModificado) ;
+                        System.out.println("Se ha modificado el nombre.\nDe --> " + nombreBusqueda + "\nA --> " + nombreModificado) ;
+                        
+                        validador = true ;
+                    }
+                    
+                } while (!validador) ;
+            }
+             
+            conexion.desconectar() ;
+            conn.close() ;
+            leer.close() ;
+            rs.close() ;
+        }
+        catch(Exception e){
+            Utilidades.mostrarMensajeGUI("Ese nombre YA EXISTE.\n Selecciona otro.") ;
+            System.out.println("NO SE PUDO LISTAR.\n" + e.getMessage()) ;
+        }
+        
+    }
      
      
     // ----------- CONTROL DE EVENTOS ----------------
@@ -765,12 +859,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jlabelIndicadorRondas = new javax.swing.JLabel();
         botonConocerResultado = new javax.swing.JButton();
         botonVolverTabla = new javax.swing.JButton();
-        botonVaciarBD = new javax.swing.JButton();
         jPanelBotonesOrdenarYBuscar = new javax.swing.JPanel();
         botonOrdenarPorPuntos = new javax.swing.JButton();
         botonOrdenarPorPJugadas = new javax.swing.JButton();
         botonOrdenarPorPGanadas = new javax.swing.JButton();
         botonBuscarPorNombre = new javax.swing.JButton();
+        jPanelBotonesEliminar = new javax.swing.JPanel();
+        botonVaciarBD = new javax.swing.JButton();
+        botonEliminar = new javax.swing.JButton();
+        botonModificar = new javax.swing.JButton();
         menuPrincipal = new javax.swing.JPanel();
         botonNuevaPartida1 = new javax.swing.JButton();
         botonRanking = new javax.swing.JButton();
@@ -1049,14 +1146,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         marcoMostrarTabla.add(botonVolverTabla, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 610, 210, 70));
 
-        botonVaciarBD.setText("VACIAR BASE DE DATOS");
-        botonVaciarBD.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonVaciarBDActionPerformed(evt);
-            }
-        });
-        marcoMostrarTabla.add(botonVaciarBD, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 190, 170));
-
         botonOrdenarPorPuntos.setText("Ordenar por PUNTOS");
         botonOrdenarPorPuntos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1117,6 +1206,52 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         );
 
         marcoMostrarTabla.add(jPanelBotonesOrdenarYBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 290, 300, 380));
+
+        botonVaciarBD.setText("ELIMINAR TODO");
+        botonVaciarBD.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonVaciarBDActionPerformed(evt);
+            }
+        });
+
+        botonEliminar.setText("ELIMINAR jugador/a");
+
+        botonModificar.setText("MODIFICAR jugador/a");
+        botonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonModificarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelBotonesEliminarLayout = new javax.swing.GroupLayout(jPanelBotonesEliminar);
+        jPanelBotonesEliminar.setLayout(jPanelBotonesEliminarLayout);
+        jPanelBotonesEliminarLayout.setHorizontalGroup(
+            jPanelBotonesEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBotonesEliminarLayout.createSequentialGroup()
+                .addContainerGap(33, Short.MAX_VALUE)
+                .addGroup(jPanelBotonesEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesEliminarLayout.createSequentialGroup()
+                        .addComponent(botonVaciarBD, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBotonesEliminarLayout.createSequentialGroup()
+                        .addGroup(jPanelBotonesEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(botonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(botonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(36, 36, 36))))
+        );
+        jPanelBotonesEliminarLayout.setVerticalGroup(
+            jPanelBotonesEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelBotonesEliminarLayout.createSequentialGroup()
+                .addContainerGap(32, Short.MAX_VALUE)
+                .addComponent(botonModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(botonEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(botonVaciarBD, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
+        );
+
+        marcoMostrarTabla.add(jPanelBotonesEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 240, 270));
 
         javax.swing.GroupLayout ventanaMostrarTablaLayout = new javax.swing.GroupLayout(ventanaMostrarTabla.getContentPane());
         ventanaMostrarTabla.getContentPane().setLayout(ventanaMostrarTablaLayout);
@@ -1391,6 +1526,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         tablaPuntuaciones.setModel(actualizarModeloTablaRankingPorPartidasGanadas(dataRanking)) ;
     }//GEN-LAST:event_botonOrdenarPorPGanadasActionPerformed
 
+    private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
+        
+        String nombreBusqueda = Utilidades.leerCadenaGUI("Introduce el nombre del jugador que quieres modificar.") ;
+        
+        modificarNombreJugador(nombreBusqueda) ;
+        
+        tablaPuntuaciones.setModel(actualizarModeloTablaRanking(dataRanking)) ;
+    }//GEN-LAST:event_botonModificarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1430,7 +1574,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botonBuscarPorNombre;
     private javax.swing.JButton botonConocerResultado;
     private javax.swing.JButton botonContinuarListaJugadoresInicial;
+    private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonJugar;
+    private javax.swing.JButton botonModificar;
     private javax.swing.JButton botonNuevaPartida1;
     private javax.swing.JButton botonOrdenarPorPGanadas;
     private javax.swing.JButton botonOrdenarPorPJugadas;
@@ -1440,6 +1586,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botonVolverTabla;
     private javax.swing.JTextField cajaTextoNumeroJugadores1;
     private javax.swing.JLabel fondoPantalla;
+    private javax.swing.JPanel jPanelBotonesEliminar;
     private javax.swing.JPanel jPanelBotonesOrdenarYBuscar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
